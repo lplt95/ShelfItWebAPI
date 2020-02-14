@@ -4,7 +4,7 @@ using System.Linq;
 using DataTransfer;
 using System.Threading.Tasks;
 
-namespace ShelfItService.Repositories
+namespace ShelfItService.DataRepositories
 {
     public class FilmRepository
     {
@@ -20,6 +20,7 @@ namespace ShelfItService.Repositories
             {
                 idFilm = 1, 
                 idPozycja = 7, 
+                repositoryID = 2,
                 DlugoscTrwania = 150,
                 notatka = "Film taki sobie.",
                 ocena = 2,
@@ -32,6 +33,7 @@ namespace ShelfItService.Repositories
             {
                 idFilm = 2, 
                 idPozycja = 8, 
+                repositoryID = 4,
                 DlugoscTrwania = 180,
                 notatka = "Fajne",
                 ocena = 4,
@@ -44,6 +46,7 @@ namespace ShelfItService.Repositories
             {
                 idFilm = 3,
                 idPozycja = 9, 
+                repositoryID = 2,
                 DlugoscTrwania = 90,
                 notatka = "",
                 ocena = 3,

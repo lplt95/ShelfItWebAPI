@@ -1,0 +1,27 @@
+﻿Scenariusz 1: 
+1. Logowanie - aplikacja wysyła żądanie do API (login, hasło w postaci hash)
+	1.1 API sprawdza hasło
+		HASŁO POPRAWNE? 
+		TAK
+		1.1.1 Generuj sessionID dla usera
+		1.1.2 Zarejestruj sessionID na bazie
+		1.1.3 Odpowiedz sessionID do aplikacji
+		NIE
+		1.1.1 Odpowiedz do aplikacji BadRequest(Wrong login or password!)
+2. Aplikacja żąda spis wszystkich książek należących do usera
+	2.1 Sprawdź sessionID&userID
+		USERID&SESSIONID ZGODNE?
+		TAK
+		2.2.1 Sprawdź ID repozytoriów dla usera
+		2.2.2 Znajdź wszystkie książki należące do repozytoriów usera
+		2.2.3 Odpowiedz aplikacji json z książkami
+		NIE
+		2.2.1 Odpowiedz aplikacji BadRequest(SessionID is not valid for UserID)
+3. Aplikacja żąda wylogowania dla usera 
+	3.1 Sprawdź userID&SessionID
+		USERID&SESSIONID ZGODNE?
+		TAK
+		3.1.1 Usuń wpis o SessionID z bazy
+		3.1.2 Odpowiedz aplikacji Ok()
+		NIE
+		3.1.1 Odpowiedz aplikacji BadRequest()

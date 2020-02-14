@@ -4,7 +4,7 @@ using System.Linq;
 using DataTransfer;
 using System.Threading.Tasks;
 
-namespace ShelfItService.Repositories
+namespace ShelfItService.DataRepositories
 {
     public class BookRepository
     {
@@ -19,6 +19,7 @@ namespace ShelfItService.Repositories
             ksiazki.Add(new KsiazkaDto()
             {
                 idPozycja = 1,
+                repositoryID = 2,
                 notatka = "Książka do przeczytania",
                 ocena = 5,
                 Okladka = "Miękka",
@@ -32,6 +33,7 @@ namespace ShelfItService.Repositories
             ksiazki.Add(new KsiazkaDto() 
             {
                 idPozycja = 2,
+                repositoryID = 1,
                 notatka = "Ta książka jest dość średnia",
                 ocena = 3,
                 Okladka = "Twarda",
@@ -45,6 +47,7 @@ namespace ShelfItService.Repositories
             ksiazki.Add(new KsiazkaDto()
             {
                 idPozycja = 3,
+                repositoryID = 2,
                 notatka = "To jest okropna książka!",
                 ocena = 1,
                 Okladka = "Miękka",

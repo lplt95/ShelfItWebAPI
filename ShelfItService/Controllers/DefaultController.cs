@@ -12,7 +12,7 @@ namespace ShelfItService.Controllers
         [HttpGet]
         public IActionResult CheckStatus()
         {
-            return Unauthorized();
+            return Ok("You are running ShelfItService");
         }
     }
 }

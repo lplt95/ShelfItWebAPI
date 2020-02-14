@@ -6,10 +6,11 @@ using System.Threading.Tasks;
 
 namespace DataTransfer
 {
-    class RepozytoriumDto
+    public class RepozytoriumDto
     {
         public int repozytoriumID { get; set; }
         public int wlascicielID { get; set; }
+        public string nazwa { get; set; }
         public char dfltInd { get; set; }
         //repoNumber odnosi się do numeru kolejnego repozytorium danego użytkownika,
         //tnz. repoNumber = 2 oznacza, że jest to drugie repozytorium danego użytkownika

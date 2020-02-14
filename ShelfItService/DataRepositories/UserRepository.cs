@@ -4,7 +4,7 @@ using System.Linq;
 using DataTransfer;
 using System.Threading.Tasks;
 
-namespace ShelfItService.Repositories
+namespace ShelfItService.DataRepositories
 {
     public class UserRepository
     {
@@ -22,20 +22,34 @@ namespace ShelfItService.Repositories
             {
                 userID = 1,
                 login = "admin@gmail.com",
-                password = crypto.GetHash("admin1234")
+                password = crypto.GetHash("admin1234"),
+                repozytoria = new List<RepozytoriumDto> 
+                { 
+                    new RepozytoriumDto { repozytoriumID = 1, wlascicielID = 1, nazwa = "Default", repoNumber = 1, dfltInd = 'Y'}, 
+                    new RepozytoriumDto { repozytoriumID = 2, wlascicielID = 1, nazwa = "Repo testowe", repoNumber = 2, dfltInd = 'N'}
+                } 
+                
             });
             userzy.Add(new UserDto()
             {
                 userID = 2,
                 login = "user",
-                password = crypto.GetHash("123456")
-                
+                password = crypto.GetHash("123456"),
+                repozytoria = new List<RepozytoriumDto>
+                {
+                    new RepozytoriumDto { repozytoriumID = 3, wlascicielID = 1, nazwa = "Default", repoNumber = 1, dfltInd = 'Y'},
+                }
+
             });
             userzy.Add(new UserDto()
             {
                 userID = 3,
                 login = "paulaa94",
-                password = crypto.GetHash("b88bi3s")
+                password = crypto.GetHash("b88bi3s"),
+                repozytoria = new List<RepozytoriumDto>
+                {
+                    new RepozytoriumDto { repozytoriumID = 4, wlascicielID = 1, nazwa = "Default", repoNumber = 1, dfltInd = 'Y'},
+                }
             });
         }
         public bool CheckPassword(string userName, string password)

@@ -12,6 +12,7 @@ namespace DataTransfer
         public int userID { get; set; }
         public string login { get; set; }
         public string password { get; set; }
+        public List<RepozytoriumDto> repozytoria { get; set; }
         public string sessionID { get; private set; }
         public void GenerateID()
         {

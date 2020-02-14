@@ -4,7 +4,7 @@ using System.Linq;
 using DataTransfer;
 using System.Threading.Tasks;
 
-namespace ShelfItService.Repositories
+namespace ShelfItService.DataRepositories
 {
     public class MusicRepository
     {
@@ -20,6 +20,7 @@ namespace ShelfItService.Repositories
             {
                 idMuzyka = 1,
                 idPozycja = 4,
+                repositoryID = 1,
                 IloscPlyt = 2,
                 IloscSciezek = 30,
                 notatka = "Jakaś kocia muzyka! :(",
@@ -33,6 +34,7 @@ namespace ShelfItService.Repositories
             {
                 idMuzyka = 2,
                 idPozycja = 5,
+                repositoryID = 2,
                 IloscPlyt = 1,
                 IloscSciezek = 15,
                 notatka = "Ahhh... Mozart!",
@@ -46,6 +48,7 @@ namespace ShelfItService.Repositories
             {
                 idMuzyka = 3,
                 idPozycja = 6,
+                repositoryID = 3,
                 IloscPlyt = 1,
                 IloscSciezek = 10,
                 notatka = "Niemiecki metal, fuj.",
