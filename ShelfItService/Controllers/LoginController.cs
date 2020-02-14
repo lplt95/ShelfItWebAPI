@@ -17,7 +17,7 @@ namespace ShelfItService.Controllers
         public LoginController()
         {
             repository = new UserRepository();
-            listaUserow = repository.userzy;
+            listaUserow = UserRepository.userzy;
         }
         [HttpGet()]
         public IActionResult LoginUser(string userName, string userPassword)

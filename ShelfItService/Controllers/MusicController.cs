@@ -19,9 +19,24 @@ namespace ShelfItService.Controllers
             listaMuzyki = repository.muzyka;
         }
         [HttpGet()]
-        public IActionResult GetAllMusic()
+        public IActionResult GetAllMusic(string sessionID, int? userID)
         {
-            return Ok(listaMuzyki);
+            if (sessionID == null || userID == null) return BadRequest();
+            var user = UserRepository.userzy.Find(x => x.userID == userID);
+            var listToReturn = new List<MuzykaDto>();
+            if (user.sessionID == sessionID)
+            {
+                foreach (var repo in user.repozytoria)
+                {
+                    var list = listaMuzyki.FindAll(x => x.repositoryID == repo.repozytoriumID);
+                    listToReturn.AddRange(list);
+                }
+                return Ok(listToReturn);
+            }
+            else
+            {
+                return BadRequest("SessionID is not valid for user");
+            }
         }
         [HttpGet("{id}")]
         public IActionResult GetMusic(int id)
