@@ -38,7 +38,7 @@ namespace ShelfItService.Controllers
                 return BadRequest("SessionID is not valid for user");
             }
         }
-        [HttpGet("{id}")]
+        //[HttpGet("{id}")]
         public IActionResult GetFilm(int id)
         {
             var filmToReturn = listaFilmow.FirstOrDefault(f => f.idFilm == id);
@@ -48,7 +48,7 @@ namespace ShelfItService.Controllers
             }
             return Ok(filmToReturn);
         }
-        [HttpGet("{name}")]
+        //[HttpGet("{name}")]
         public IActionResult GetFilm(string name)
         {
             var filmToReturn = listaFilmow.FirstOrDefault(f => f.tytul.Contains(name));

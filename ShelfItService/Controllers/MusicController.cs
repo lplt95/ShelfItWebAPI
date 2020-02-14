@@ -38,7 +38,7 @@ namespace ShelfItService.Controllers
                 return BadRequest("SessionID is not valid for user");
             }
         }
-        [HttpGet("{id}")]
+        //[HttpGet("{id}")]
         public IActionResult GetMusic(int id)
         {
             var musicToReturn = listaMuzyki.FirstOrDefault(m => m.idMuzyka == id);
@@ -48,7 +48,7 @@ namespace ShelfItService.Controllers
             }
             return Ok(musicToReturn);
         }
-        [HttpGet("{name}")]
+        //[HttpGet("{name}")]
         public IActionResult GetMusic(string name)
         {
             var musicToReturn = listaMuzyki.FirstOrDefault(m => m.tytul.Contains(name));

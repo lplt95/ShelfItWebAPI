@@ -19,19 +19,28 @@ namespace ShelfItService.Controllers
             repository = new UserRepository();
             listaUserow = UserRepository.userzy;
         }
-        [HttpGet()]
+        [HttpGet("In")]
         public IActionResult LoginUser(string userName, string userPassword)
         {
             if(repository.CheckPassword(userName, userPassword))
             {
                 UserDto user = listaUserow.Find(x => x.login == userName);
                 user.GenerateID();
-                return Ok(user.sessionID);
+                return Ok(user.userID + ", " + user.sessionID);
             }
-            else
+            else return BadRequest("Wrong login or password!");
+        }
+        [HttpGet("Out")]
+        public IActionResult LogoutUser(int? userID, string sessionID)
+        {
+            if (userID == null || sessionID == null) return BadRequest();
+            var user = listaUserow.Find(x => x.userID == userID);
+            if (user.sessionID == sessionID)
             {
-                return BadRequest("Wrong login or password!");
+                user.LogoutUser();
+                return Ok();
             }
+            else return BadRequest();
         }
     }
 }

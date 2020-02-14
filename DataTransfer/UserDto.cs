@@ -28,5 +28,9 @@ namespace DataTransfer
             }
             sessionID = _sBulider.ToString();
         }
+        public void LogoutUser()
+        {
+            sessionID = null;
+        }
     }
 }

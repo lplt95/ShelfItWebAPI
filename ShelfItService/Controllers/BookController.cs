@@ -33,12 +33,9 @@ namespace ShelfItService.Controllers
                 }
                 return Ok(listToReturn);
             }
-            else
-            {
-                return BadRequest("SessionID is not valid for user");
-            }
+            else return BadRequest("SessionID is not valid for user");
         }
-        [HttpGet("{id}")]
+        //[HttpGet("{id}")]
         public IActionResult GetBook(int id)
         {
             var bookToReturn = listaKsiazek.FirstOrDefault(k => k.idKsiazka == id);
@@ -48,7 +45,7 @@ namespace ShelfItService.Controllers
             }
             return Ok(bookToReturn);
         }
-        [HttpGet("{name}")]
+        //[HttpGet("{name}")]
         public IActionResult GetBook(string name)
         {
             var bookToReturn = listaKsiazek.FirstOrDefault(k => k.tytul.Contains(name));
@@ -58,7 +55,7 @@ namespace ShelfItService.Controllers
             }
             return Ok(bookToReturn);
         }
-        [HttpGet("Author/{id}")]
+        //[HttpGet("Author/{id}")]
         public IActionResult GetBookByAuthor(int id)
         {
             //var booksToReturn =

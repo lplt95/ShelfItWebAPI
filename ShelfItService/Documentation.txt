@@ -1,0 +1,20 @@
+﻿BookController, FilmController, MusicController:
+A: [ControllerName]?sessionID=&userID=
+	1. Method name: GetAllUsers[item]
+	2. Parameters: 
+		2.1 string sessionID - ID created for user during login, which is using to authorize
+		2.2 int userID - a unique key for user, which is using to find entry for specific account
+	3. Returning list of all items from type, which are under all users repositories.
+
+LoginController:
+A: Login/In?userName=&userPassword=
+	1. Method name: LoginUser
+	2. Parameters:
+		2.1 string userName - user's login, unique for everyone
+		2.2 string userPassword - password, which user types in field. Make sure, that you are sending password in MD5 hash format
+	3. Returning userID and sessionID for user.
+B: Login/Out?userName=&sessionID=
+	1. Method name: LogoutUser
+	2. Parameters:
+		2.1 int userID - user's login, unique for everyone
+		2.2 string sessionID - ID created for user during login, which is using to authorize
