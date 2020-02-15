@@ -21,7 +21,7 @@ namespace ShelfItService.Controllers
         [HttpGet()]
         public IActionResult GetAllMusic(string sessionID, int? userID)
         {
-            if (sessionID == null || userID == null) return BadRequest();
+            if (sessionID == null || userID == null) return BadRequest("Values cannot be null!");
             var user = UserRepository.userzy.Find(x => x.userID == userID);
             var listToReturn = new List<MuzykaDto>();
             if (user.sessionID == sessionID)
@@ -39,8 +39,9 @@ namespace ShelfItService.Controllers
             }
         }
         [HttpGet("Music")]
-        public IActionResult GetBook(int id, int? userID)
+        public IActionResult GetBook(int? id, int? userID)
         {
+            if (id == null || userID == null) return BadRequest("Values cannot be null!");
             var userRepo = UserRepository.userzy.Find(x => x.userID == userID).repozytoria;
             var musicToReturn = listaMuzyki.FirstOrDefault(m => m.idMuzyka == id);
             if (musicToReturn == null)

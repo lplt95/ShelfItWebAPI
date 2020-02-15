@@ -21,7 +21,7 @@ namespace ShelfItService.Controllers
         [HttpGet()]
         public IActionResult GetAllUsersBook(string sessionID, int? userID)
         {
-            if (sessionID == null || userID == null) return BadRequest();
+            if (sessionID == null || userID == null) return BadRequest("Values cannot be null!");
             var user = UserRepository.userzy.Find(x => x.userID == userID);
             var listToReturn = new List<KsiazkaDto>();
             if(user.sessionID == sessionID)
@@ -36,8 +36,9 @@ namespace ShelfItService.Controllers
             else return BadRequest("SessionID is not valid for user");
         }
         [HttpGet("Book")]
-        public IActionResult GetBook(int id, int? userID)
+        public IActionResult GetBook(int? id, int? userID)
         {
+            if (id == null || userID == null) return BadRequest("Values cannot be null!");
             var userRepo = UserRepository.userzy.Find(x => x.userID == userID).repozytoria;
             var bookToReturn = listaKsiazek.FirstOrDefault(k => k.idKsiazka == id);
             if(bookToReturn == null)
