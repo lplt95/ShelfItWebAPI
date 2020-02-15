@@ -27,7 +27,11 @@ namespace ShelfItService.DataRepositories
                 rokWydania = 2019,
                 typ = TypConst.typFilm,
                 tytul = "Justice League",
-                wydawca = "Sony"
+                wydawca = "Sony",
+                autorzy = new List<AutorDto>()
+                {
+                    new AutorDto(){ idAutora = 7, Imie = "Reżyser", Nazwisko = "Nieznany"}
+                }
             });
             filmy.Add(new FilmDto()
             {
@@ -40,7 +44,11 @@ namespace ShelfItService.DataRepositories
                 rokWydania = 2020,
                 typ = TypConst.typFilm,
                 tytul = "Piękna i Bestia",
-                wydawca = "Disney"
+                wydawca = "Disney",
+                autorzy = new List<AutorDto>()
+                {
+                    new AutorDto(){ idAutora = 8, Imie = "Ktoś", Nazwisko = "Tam"}
+                }
             });
             filmy.Add(new FilmDto()
             {
@@ -53,7 +61,11 @@ namespace ShelfItService.DataRepositories
                 rokWydania = 2010,
                 typ = TypConst.typFilm,
                 tytul = "TO",
-                wydawca = "Sony"
+                wydawca = "Sony",
+                autorzy = new List<AutorDto>()
+                {
+                    new AutorDto(){ idAutora = 9, Imie = "Jacek", Nazwisko = "Bursztyn"}
+                }
             });
         }
         public bool VerifyFilm(FilmDto film, List<RepozytoriumDto> repo)

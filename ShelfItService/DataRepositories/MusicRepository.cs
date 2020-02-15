@@ -28,7 +28,11 @@ namespace ShelfItService.DataRepositories
                 rokWydania = 2019,
                 typ = TypConst.typMuzyka,
                 tytul = "Kocie Rytmy vol. 1",
-                wydawca = "Cats Entertainment"
+                wydawca = "Cats Entertainment",
+                 autorzy = new List<AutorDto>()
+                {
+                    new AutorDto(){ idAutora = 4, Imie = "Kot", Nazwisko = "Nieznany"}
+                }
             });
             muzyka.Add(new MuzykaDto()
             {
@@ -42,7 +46,11 @@ namespace ShelfItService.DataRepositories
                 rokWydania = 1790,
                 typ = TypConst.typMuzyka,
                 tytul = "Klasycy rocka - Mozart",
-                wydawca = "W. Mozart Music Deutschland"
+                wydawca = "W. Mozart Music Deutschland",
+                autorzy = new List<AutorDto>()
+                {
+                    new AutorDto(){ idAutora = 5, Imie = "Mozart", Nazwisko = "JakiśTam"}
+                }
             });
             muzyka.Add(new MuzykaDto()
             {
@@ -56,7 +64,11 @@ namespace ShelfItService.DataRepositories
                 rokWydania = 2019,
                 typ = TypConst.typMuzyka,
                 tytul = "Deutschland",
-                wydawca = "Sony Music Poland"
+                wydawca = "Sony Music Poland",
+                autorzy = new List<AutorDto>()
+                {
+                    new AutorDto(){ idAutora = 6, Imie = "Rammstein", Nazwisko = ""}
+                }
             });
         }
         public bool VerifyMusic(MuzykaDto muzyka, List<RepozytoriumDto> repo)

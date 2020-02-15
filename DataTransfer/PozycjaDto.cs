@@ -17,5 +17,6 @@ namespace DataTransfer
         public string notatka { get; set; }
         public int ocena { get; set; }
         public string wydawca { get; set; }
+        public List<AutorDto> autorzy { get; set; }
     }
 }

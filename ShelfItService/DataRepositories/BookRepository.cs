@@ -28,7 +28,12 @@ namespace ShelfItService.DataRepositories
                 idKsiazka = 1,
                 IloscStron = 100,
                 tytul = "Książka na pewien temat",
-                rokWydania = 2020
+                rokWydania = 2020,
+                autorzy = new List<AutorDto>()
+                {
+                    new AutorDto(){ idAutora = 1, Imie = "Jan", Nazwisko = "Kowalski"},
+                    new AutorDto(){ idAutora = 2, Imie = "Marek", Nazwisko = "Nowak"}
+                }
             });
             ksiazki.Add(new KsiazkaDto() 
             {
@@ -42,7 +47,11 @@ namespace ShelfItService.DataRepositories
                 idKsiazka = 2, 
                 IloscStron = 150,
                 tytul = "Książka na inny temat",
-                rokWydania = 2019
+                rokWydania = 2019,
+                autorzy = new List<AutorDto>()
+                {
+                    new AutorDto(){ idAutora = 1, Imie = "Jan", Nazwisko = "Kowalski"}
+                }
             });
             ksiazki.Add(new KsiazkaDto()
             {
@@ -56,7 +65,11 @@ namespace ShelfItService.DataRepositories
                 idKsiazka = 3, 
                 IloscStron = 200,
                 tytul = "To nawet nie jest książka...",
-                rokWydania = 2018
+                rokWydania = 2018,
+                autorzy = new List<AutorDto>()
+                {
+                    new AutorDto(){ idAutora = 2, Imie = "Marek", Nazwisko = "Nowak"}
+                }
             });
             ksiazki.Add(new KsiazkaDto()
             {
@@ -70,7 +83,11 @@ namespace ShelfItService.DataRepositories
                 idKsiazka = 4,
                 IloscStron = 350,
                 tytul = "365 dni",
-                rokWydania = 2018
+                rokWydania = 2018,
+                autorzy = new List<AutorDto>()
+                {
+                    new AutorDto(){ idAutora = 3, Imie = "Ktoś", Nazwisko = "Nieznany"}
+                }
             });
         }
         public bool VerifyBook(KsiazkaDto ksiazka, List<RepozytoriumDto> repo)

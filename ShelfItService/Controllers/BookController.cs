@@ -51,21 +51,6 @@ namespace ShelfItService.Controllers
             }
             return Ok(bookToReturn);
         }
-        //[HttpGet("{name}")]
-        public IActionResult GetBook(string name)
-        {
-            var bookToReturn = listaKsiazek.FirstOrDefault(k => k.tytul.Contains(name));
-            if (bookToReturn == null)
-            {
-                return NotFound();
-            }
-            return Ok(bookToReturn);
-        }
-        //[HttpGet("Author/{id}")]
-        public IActionResult GetBookByAuthor(int id)
-        {
-            //var booksToReturn =
-            return Unauthorized();
-        }
+        
     }
 }
