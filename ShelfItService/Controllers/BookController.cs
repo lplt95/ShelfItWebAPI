@@ -35,13 +35,18 @@ namespace ShelfItService.Controllers
             }
             else return BadRequest("SessionID is not valid for user");
         }
-        [HttpGet("{id}")]
-        public IActionResult GetBook(int id)
+        [HttpGet("Book")]
+        public IActionResult GetBook(int id, int? userID)
         {
+            var userRepo = UserRepository.userzy.Find(x => x.userID == userID).repozytoria;
             var bookToReturn = listaKsiazek.FirstOrDefault(k => k.idKsiazka == id);
             if(bookToReturn == null)
             {
                 return NotFound();
+            }
+            if(!repository.VerifyBook(bookToReturn, userRepo))
+            {
+                return BadRequest("You don't have permission to access this resource");
             }
             return Ok(bookToReturn);
         }

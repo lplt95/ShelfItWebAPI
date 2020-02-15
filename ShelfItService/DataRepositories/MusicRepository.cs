@@ -59,5 +59,11 @@ namespace ShelfItService.DataRepositories
                 wydawca = "Sony Music Poland"
             });
         }
+        public bool VerifyMusic(MuzykaDto muzyka, List<RepozytoriumDto> repo)
+        {
+            var repository = repo.Find(x => x.repozytoriumID == muzyka.repositoryID);
+            if (repository != null) return true;
+            else return false;
+        }
     }
 }

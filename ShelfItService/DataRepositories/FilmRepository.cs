@@ -56,5 +56,11 @@ namespace ShelfItService.DataRepositories
                 wydawca = "Sony"
             });
         }
+        public bool VerifyFilm(FilmDto film, List<RepozytoriumDto> repo)
+        {
+            var repository = repo.Find(x => x.repozytoriumID == film.repositoryID);
+            if (repository != null) return true;
+            else return false;
+        }
     }
 }

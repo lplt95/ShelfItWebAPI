@@ -38,13 +38,18 @@ namespace ShelfItService.Controllers
                 return BadRequest("SessionID is not valid for user");
             }
         }
-        //[HttpGet("{id}")]
-        public IActionResult GetMusic(int id)
+        [HttpGet("Music")]
+        public IActionResult GetBook(int id, int? userID)
         {
+            var userRepo = UserRepository.userzy.Find(x => x.userID == userID).repozytoria;
             var musicToReturn = listaMuzyki.FirstOrDefault(m => m.idMuzyka == id);
-            if(musicToReturn == null)
+            if (musicToReturn == null)
             {
                 return NotFound();
+            }
+            if (!repository.VerifyMusic(musicToReturn, userRepo))
+            {
+                return BadRequest("You don't have permission to access this resource");
             }
             return Ok(musicToReturn);
         }

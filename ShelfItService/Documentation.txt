@@ -5,6 +5,12 @@ A: [ControllerName]?sessionID=&userID=
 		2.1 string sessionID - ID created for user during login, which is using to authorize
 		2.2 int userID - a unique key for user, which is using to find entry for specific account
 	3. Returning list of all items from type, which are under all users repositories.
+B: [ControllerName]/[ControllerName]?id=&userID=
+	1. Method name: Get[item]
+	2. Parameters: 
+		2.1 int id - item id, WARNING: make sure, that you are providing id of item, not id of position
+		2.2 int userID - a unique key for user, which is using to find entry for specific account
+	3. Returning one item, if item with specific id exist and user has permission to access this item
 
 LoginController:
 A: Login/In?userName=&userPassword=

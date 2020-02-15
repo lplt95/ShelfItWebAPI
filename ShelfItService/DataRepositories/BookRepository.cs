@@ -58,6 +58,26 @@ namespace ShelfItService.DataRepositories
                 tytul = "To nawet nie jest książka...",
                 rokWydania = 2018
             });
+            ksiazki.Add(new KsiazkaDto()
+            {
+                idPozycja = 10,
+                repositoryID = 4,
+                notatka = "Nie czytałem jeszcze, ale zapowiada się na całkiem niezłe gówno.",
+                ocena = 1,
+                Okladka = "Miękka",
+                typ = TypConst.typKsiazka,
+                wydawca = "PornoKsiążki sp. z.o.o.",
+                idKsiazka = 4,
+                IloscStron = 350,
+                tytul = "365 dni",
+                rokWydania = 2018
+            });
+        }
+        public bool VerifyBook(KsiazkaDto ksiazka, List<RepozytoriumDto> repo)
+        {
+            var repository = repo.Find(x => x.repozytoriumID == ksiazka.repositoryID);
+            if (repository != null) return true;
+            else return false;
         }
     }
 }
