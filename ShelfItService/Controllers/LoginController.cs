@@ -25,6 +25,7 @@ namespace ShelfItService.Controllers
             if(repository.CheckPassword(userName, userPassword))
             {
                 UserDto user = listaUserow.Find(x => x.login == userName);
+                user.LogoutUser();
                 user.GenerateID();
                 return Ok(user.userID + ", " + user.sessionID);
             }

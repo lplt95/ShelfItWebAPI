@@ -13,8 +13,8 @@ namespace ShelfItService.DataRepositories
         new UserDto()
             {
                 userID = 1,
-                login = "admin",
-                password = "admin",//new Crypto().GetHash("admin"),
+                login = "admin@admin.pl",
+                password = new Crypto().GetHash("admin12345"),
                 repozytoria = new List<RepozytoriumDto>
                 {
                     new RepozytoriumDto { repozytoriumID = 1, wlascicielID = 1, nazwa = "Default", repoNumber = 1, dfltInd = 'Y'},

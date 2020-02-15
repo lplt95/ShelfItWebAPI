@@ -35,7 +35,7 @@ namespace ShelfItService.Controllers
             }
             else return BadRequest("SessionID is not valid for user");
         }
-        //[HttpGet("{id}")]
+        [HttpGet("{id}")]
         public IActionResult GetBook(int id)
         {
             var bookToReturn = listaKsiazek.FirstOrDefault(k => k.idKsiazka == id);
