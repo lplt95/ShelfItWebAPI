@@ -16,7 +16,7 @@ namespace ShelfItService.Controllers
         public BookController()
         {
             repository = new BookRepository();
-            listaKsiazek = repository.ksiazki;
+            listaKsiazek = BookRepository.ksiazki;
         }
         [HttpGet()]
         public IActionResult GetAllUsersBook(string sessionID, int? userID)
@@ -51,6 +51,26 @@ namespace ShelfItService.Controllers
             }
             return Ok(bookToReturn);
         }
-        
+        [HttpPost("Book")]
+        public IActionResult AddBookToRepository(string sessionID, int? userID, [FromBody] KsiazkaDto ksiazka)
+        {
+            if (sessionID == null || userID == null) return BadRequest("Values cannot be null!");
+            var user = UserRepository.userzy.Find(x => x.userID == userID);
+            if (user.sessionID == sessionID)
+            {
+                if (ksiazka == null || ksiazka.tytul == null)
+                {
+                    return BadRequest("Values cannot be null!");
+                }
+                ksiazka.idPozycja = Repository.maxPosID;
+                ksiazka.idKsiazka = listaKsiazek.Max(x => x.idKsiazka);
+                ksiazka.repositoryID = user.repozytoria.Find(x => x.dfltInd == 'Y').repozytoriumID;
+                ksiazka.typ = TypConst.typKsiazka;
+                listaKsiazek.Add(ksiazka);
+                Repository.maxPosID++;
+                return Ok();
+            }
+            else return BadRequest("SessionID is not valid for user");
+        }
     }
 }

@@ -11,6 +11,13 @@ B: [ControllerName]/[ControllerName]?id=&userID=
 		2.1 int id - item id, WARNING: make sure, that you are providing id of item, not id of position
 		2.2 int userID - a unique key for user, which is using to find entry for specific account
 	3. Returning one item, if item with specific id exist and user has permission to access this item
+C: [ControllerName]/[ControllerName]?sessionID=&int= BODY: item in JSON format
+	1. Method name: Add[item]ToRepository
+	2. Parameters:
+		2.1 string sessionID - ID created for user during login, which is using to authorize
+		2.2 int userID - a unique key for user, which is using to find entry for specific account
+		2.3 BODY: item which you wants to create in JSON format
+	3. Returning ok, if item will be succesfully created in repository
 
 LoginController:
 A: Login/In?userName=&userPassword=

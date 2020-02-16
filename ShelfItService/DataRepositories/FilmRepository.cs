@@ -8,18 +8,12 @@ namespace ShelfItService.DataRepositories
 {
     public class FilmRepository
     {
-        public List<FilmDto> filmy;
-        public FilmRepository()
+        public static List<FilmDto> filmy = new List<FilmDto>()
         {
-            filmy = new List<FilmDto>();
-            CreateList();
-        }
-        private void CreateList()
-        {
-            filmy.Add(new FilmDto()
+            new FilmDto()
             {
-                idFilm = 1, 
-                idPozycja = 7, 
+                idFilm = 1,
+                idPozycja = 7,
                 repositoryID = 2,
                 DlugoscTrwania = 150,
                 notatka = "Film taki sobie.",
@@ -32,11 +26,11 @@ namespace ShelfItService.DataRepositories
                 {
                     new AutorDto(){ idAutora = 7, Imie = "Reżyser", Nazwisko = "Nieznany"}
                 }
-            });
-            filmy.Add(new FilmDto()
+            },
+            new FilmDto()
             {
-                idFilm = 2, 
-                idPozycja = 8, 
+                idFilm = 2,
+                idPozycja = 8,
                 repositoryID = 4,
                 DlugoscTrwania = 180,
                 notatka = "Fajne",
@@ -49,11 +43,11 @@ namespace ShelfItService.DataRepositories
                 {
                     new AutorDto(){ idAutora = 8, Imie = "Ktoś", Nazwisko = "Tam"}
                 }
-            });
-            filmy.Add(new FilmDto()
+            },
+            new FilmDto()
             {
                 idFilm = 3,
-                idPozycja = 9, 
+                idPozycja = 9,
                 repositoryID = 2,
                 DlugoscTrwania = 90,
                 notatka = "",
@@ -66,8 +60,8 @@ namespace ShelfItService.DataRepositories
                 {
                     new AutorDto(){ idAutora = 9, Imie = "Jacek", Nazwisko = "Bursztyn"}
                 }
-            });
-        }
+            }
+        };
         public bool VerifyFilm(FilmDto film, List<RepozytoriumDto> repo)
         {
             var repository = repo.Find(x => x.repozytoriumID == film.repositoryID);

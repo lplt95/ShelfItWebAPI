@@ -8,15 +8,9 @@ namespace ShelfItService.DataRepositories
 {
     public class BookRepository
     {
-        public List<KsiazkaDto> ksiazki;
-        public BookRepository()
+        public static List<KsiazkaDto> ksiazki = new List<KsiazkaDto>()
         {
-            ksiazki = new List<KsiazkaDto>();
-            CreateList();
-        }
-        private void CreateList()
-        {
-            ksiazki.Add(new KsiazkaDto()
+        new KsiazkaDto()
             {
                 idPozycja = 1,
                 repositoryID = 2,
@@ -34,8 +28,8 @@ namespace ShelfItService.DataRepositories
                     new AutorDto(){ idAutora = 1, Imie = "Jan", Nazwisko = "Kowalski"},
                     new AutorDto(){ idAutora = 2, Imie = "Marek", Nazwisko = "Nowak"}
                 }
-            });
-            ksiazki.Add(new KsiazkaDto() 
+            },
+            new KsiazkaDto()
             {
                 idPozycja = 2,
                 repositoryID = 1,
@@ -44,7 +38,7 @@ namespace ShelfItService.DataRepositories
                 Okladka = "Twarda",
                 typ = TypConst.typKsiazka,
                 wydawca = "Wydawnictwo Testowe S.A.",
-                idKsiazka = 2, 
+                idKsiazka = 2,
                 IloscStron = 150,
                 tytul = "Książka na inny temat",
                 rokWydania = 2019,
@@ -52,8 +46,8 @@ namespace ShelfItService.DataRepositories
                 {
                     new AutorDto(){ idAutora = 1, Imie = "Jan", Nazwisko = "Kowalski"}
                 }
-            });
-            ksiazki.Add(new KsiazkaDto()
+            },
+            new KsiazkaDto()
             {
                 idPozycja = 3,
                 repositoryID = 2,
@@ -62,7 +56,7 @@ namespace ShelfItService.DataRepositories
                 Okladka = "Miękka",
                 typ = TypConst.typKsiazka,
                 wydawca = "Wydajemy Szrot s.j.",
-                idKsiazka = 3, 
+                idKsiazka = 3,
                 IloscStron = 200,
                 tytul = "To nawet nie jest książka...",
                 rokWydania = 2018,
@@ -70,8 +64,8 @@ namespace ShelfItService.DataRepositories
                 {
                     new AutorDto(){ idAutora = 2, Imie = "Marek", Nazwisko = "Nowak"}
                 }
-            });
-            ksiazki.Add(new KsiazkaDto()
+            },
+            new KsiazkaDto()
             {
                 idPozycja = 10,
                 repositoryID = 4,
@@ -88,8 +82,8 @@ namespace ShelfItService.DataRepositories
                 {
                     new AutorDto(){ idAutora = 3, Imie = "Ktoś", Nazwisko = "Nieznany"}
                 }
-            });
-        }
+            }
+        };
         public bool VerifyBook(KsiazkaDto ksiazka, List<RepozytoriumDto> repo)
         {
             var repository = repo.Find(x => x.repozytoriumID == ksiazka.repositoryID);

@@ -15,8 +15,8 @@ namespace ShelfItService.Controllers
         MusicRepository repository;
         public MusicController()
         {
+            listaMuzyki = MusicRepository.muzyka;
             repository = new MusicRepository();
-            listaMuzyki = repository.muzyka;
         }
         [HttpGet()]
         public IActionResult GetAllMusic(string sessionID, int? userID)
@@ -39,7 +39,7 @@ namespace ShelfItService.Controllers
             }
         }
         [HttpGet("Music")]
-        public IActionResult GetBook(int? id, int? userID)
+        public IActionResult GetMusic(int? id, int? userID)
         {
             if (id == null || userID == null) return BadRequest("Values cannot be null!");
             var userRepo = UserRepository.userzy.Find(x => x.userID == userID).repozytoria;
@@ -54,15 +54,26 @@ namespace ShelfItService.Controllers
             }
             return Ok(musicToReturn);
         }
-        //[HttpGet("{name}")]
-        public IActionResult GetMusic(string name)
+        [HttpPost("Book")]
+        public IActionResult AddMusicToRepository(string sessionID, int? userID, [FromBody] MuzykaDto music)
         {
-            var musicToReturn = listaMuzyki.FirstOrDefault(m => m.tytul.Contains(name));
-            if (musicToReturn == null)
+            if (sessionID == null || userID == null) return BadRequest("Values cannot be null!");
+            var user = UserRepository.userzy.Find(x => x.userID == userID);
+            if (user.sessionID == sessionID)
             {
-                return NotFound();
+                if (music == null || music.tytul == null)
+                {
+                    return BadRequest("Values cannot be null!");
+                }
+                music.idPozycja = Repository.maxPosID;
+                music.idMuzyka = listaMuzyki.Max(x => x.idMuzyka);
+                music.repositoryID = user.repozytoria.Find(x => x.dfltInd == 'Y').repozytoriumID;
+                music.typ = TypConst.typKsiazka;
+                listaMuzyki.Add(music);
+                Repository.maxPosID++;
+                return Ok();
             }
-            return Ok(musicToReturn);
+            else return BadRequest("SessionID is not valid for user");
         }
     }
 }

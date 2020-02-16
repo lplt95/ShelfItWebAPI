@@ -8,15 +8,9 @@ namespace ShelfItService.DataRepositories
 {
     public class MusicRepository
     {
-        public List<MuzykaDto> muzyka;
-        public MusicRepository()
+        public static List<MuzykaDto> muzyka = new List<MuzykaDto>()
         {
-            muzyka = new List<MuzykaDto>();
-            CreateList();
-        }
-        private void CreateList()
-        {
-            muzyka.Add(new MuzykaDto()
+            new MuzykaDto()
             {
                 idMuzyka = 1,
                 idPozycja = 4,
@@ -33,8 +27,8 @@ namespace ShelfItService.DataRepositories
                 {
                     new AutorDto(){ idAutora = 4, Imie = "Kot", Nazwisko = "Nieznany"}
                 }
-            });
-            muzyka.Add(new MuzykaDto()
+            },
+            new MuzykaDto()
             {
                 idMuzyka = 2,
                 idPozycja = 5,
@@ -51,8 +45,8 @@ namespace ShelfItService.DataRepositories
                 {
                     new AutorDto(){ idAutora = 5, Imie = "Mozart", Nazwisko = "JakiśTam"}
                 }
-            });
-            muzyka.Add(new MuzykaDto()
+            },
+            new MuzykaDto()
             {
                 idMuzyka = 3,
                 idPozycja = 6,
@@ -69,8 +63,8 @@ namespace ShelfItService.DataRepositories
                 {
                     new AutorDto(){ idAutora = 6, Imie = "Rammstein", Nazwisko = ""}
                 }
-            });
-        }
+            }
+        };
         public bool VerifyMusic(MuzykaDto muzyka, List<RepozytoriumDto> repo)
         {
             var repository = repo.Find(x => x.repozytoriumID == muzyka.repositoryID);
