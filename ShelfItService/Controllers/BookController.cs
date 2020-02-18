@@ -68,7 +68,6 @@ namespace ShelfItService.Controllers
                 ksiazka.repositoryID = user.repozytoria.Find(x => x.dfltInd == 'Y').repozytoriumID;
                 ksiazka.typ = TypConst.typKsiazka;
                 listaKsiazek.Add(ksiazka);
-                Repository.maxPosID++;
                 foreach (var repo in user.repozytoria)
                 {
                     var list = listaKsiazek.FindAll(x => x.repositoryID == repo.repozytoriumID);

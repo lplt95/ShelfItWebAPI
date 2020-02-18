@@ -71,7 +71,6 @@ namespace ShelfItService.Controllers
                 film.repositoryID = user.repozytoria.Find(x => x.dfltInd == 'Y').repozytoriumID;
                 film.typ = TypConst.typKsiazka;
                 listaFilmow.Add(film);
-                Repository.maxPosID++;
                 foreach (var repo in user.repozytoria)
                 {
                     var list = listaFilmow.FindAll(x => x.repositoryID == repo.repozytoriumID);
