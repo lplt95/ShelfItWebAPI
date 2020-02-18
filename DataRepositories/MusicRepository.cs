@@ -4,7 +4,7 @@ using System.Linq;
 using DataTransfer;
 using System.Threading.Tasks;
 
-namespace ShelfItService.DataRepositories
+namespace DataRepositories
 {
     public class MusicRepository
     {

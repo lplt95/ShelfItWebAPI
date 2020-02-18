@@ -10,10 +10,12 @@ namespace DataTransfer
     public class UserDto
     {
         public int userID { get; set; }
+        public string email { get; set; }
         public string login { get; set; }
         public string password { get; set; }
         public List<RepozytoriumDto> repozytoria { get; set; }
         public string sessionID { get; private set; }
+        public bool IsConfirmed { get; set; }
         public void GenerateID()
         {
             var date = DateTime.Today;

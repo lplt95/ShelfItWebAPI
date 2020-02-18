@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DataTransfer
 {
-    class ApiElementsEnum
+    public class ApiElementsEnum
     {
         #region FilmController
         public const string GetAllFilms = "ShelfIt/Film";
@@ -36,6 +36,9 @@ namespace DataTransfer
         {
             return GetBooksByAuthorUrl + id;
         }
+        #endregion
+        #region Confirm
+        public const string confirmLink = "http://192.168.1.215:61061/ShelfIt/User/Confirm?id=";
         #endregion
     }
 }
