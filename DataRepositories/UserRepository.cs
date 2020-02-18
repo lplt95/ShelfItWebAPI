@@ -4,10 +4,11 @@ using System.Linq;
 using DataTransfer;
 using System.Threading.Tasks;
 
-namespace ShelfItService.DataRepositories
+namespace DataRepositories
 {
     public class UserRepository
     {
+        public static int repoMax = 4;
         public static List<UserDto> userzy = new List<UserDto>()
         {
         new UserDto()
