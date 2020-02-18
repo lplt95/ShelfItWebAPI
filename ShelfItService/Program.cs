@@ -25,9 +25,9 @@ namespace ShelfItService
 
         private static void SetMaxIDNumber()
         {
-            var bookMax = new BookRepository().ksiazki.Max(x => x.idPozycja);
-            var filmMax = new FilmRepository().filmy.Max(x => x.idPozycja);
-            var musicMax = new MusicRepository().muzyka.Max(x => x.idPozycja);
+            var bookMax = BookRepository.ksiazki.Max(x => x.idPozycja);
+            var filmMax = FilmRepository.filmy.Max(x => x.idPozycja);
+            var musicMax = MusicRepository.muzyka.Max(x => x.idPozycja);
             List<int> maxList = new List<int>() { bookMax, filmMax, musicMax };
             Repository.maxPosID = maxList.Max(x => x);
         }

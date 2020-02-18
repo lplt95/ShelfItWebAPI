@@ -54,10 +54,11 @@ namespace ShelfItService.Controllers
             }
             return Ok(filmToReturn);
         }
-        [HttpPost("Film")]
+        [HttpPost("PostFilm")]
         public IActionResult AddBookToRepository(string sessionID, int? userID, [FromBody] FilmDto film)
         {
             if (sessionID == null || userID == null) return BadRequest("Values cannot be null!");
+            var listToReturn = new List<FilmDto>();
             var user = UserRepository.userzy.Find(x => x.userID == userID);
             if (user.sessionID == sessionID)
             {
@@ -70,7 +71,13 @@ namespace ShelfItService.Controllers
                 film.repositoryID = user.repozytoria.Find(x => x.dfltInd == 'Y').repozytoriumID;
                 film.typ = TypConst.typKsiazka;
                 listaFilmow.Add(film);
-                return Ok();
+                Repository.maxPosID++;
+                foreach (var repo in user.repozytoria)
+                {
+                    var list = listaFilmow.FindAll(x => x.repositoryID == repo.repozytoriumID);
+                    listToReturn.AddRange(list);
+                }
+                return Ok(listToReturn);
             }
             else return BadRequest("SessionID is not valid for user");
         }
