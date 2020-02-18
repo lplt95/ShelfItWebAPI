@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using DataRepositories;
+using ShelfItService.DataRepositories;
 using DataTransfer;
 
 namespace ShelfItService.Controllers
@@ -65,11 +65,12 @@ namespace ShelfItService.Controllers
                 {
                     return BadRequest("Values cannot be null!");
                 }
-                music.idPozycja = Repository.maxPosID++;
+                music.idPozycja = Repository.maxPosID;
                 music.idMuzyka = listaMuzyki.Max(x => x.idMuzyka);
                 music.repositoryID = user.repozytoria.Find(x => x.dfltInd == 'Y').repozytoriumID;
                 music.typ = TypConst.typKsiazka;
                 listaMuzyki.Add(music);
+                Repository.maxPosID++;
                 return Ok();
             }
             else return BadRequest("SessionID is not valid for user");

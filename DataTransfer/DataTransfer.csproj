@@ -43,7 +43,6 @@
   <ItemGroup>
     <Compile Include="ConstansElements\ApiElementsEnum.cs" />
     <Compile Include="AutorDto.cs" />
-    <Compile Include="EmailMessagesDto.cs" />
     <Compile Include="FilmDto.cs" />
     <Compile Include="KsiazkaDto.cs" />
     <Compile Include="MuzykaDto.cs" />
@@ -54,7 +53,6 @@
     <Compile Include="ConstansElements\TypConst.cs" />
     <Compile Include="RepozytoriumDto.cs" />
     <Compile Include="UserDto.cs" />
-    <Compile Include="UsersToConfirm.cs" />
     <Compile Include="WydawcaDto.cs" />
   </ItemGroup>
   <ItemGroup>
