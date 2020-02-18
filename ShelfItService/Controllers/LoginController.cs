@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using ShelfItService.DataRepositories;
+using DataRepositories;
 using DataTransfer;
 
 
@@ -26,6 +26,7 @@ namespace ShelfItService.Controllers
             if(repository.CheckPassword(userName, userPassword))
             {
                 UserDto user = listaUserow.Find(x => x.login == userName);
+                if (!user.IsConfirmed) return BadRequest("You have to confirm your account!");
                 user.LogoutUser();
                 user.GenerateID();
                 return Ok(user.userID + ", " + user.sessionID);
