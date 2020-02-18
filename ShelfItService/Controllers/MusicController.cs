@@ -54,10 +54,11 @@ namespace ShelfItService.Controllers
             }
             return Ok(musicToReturn);
         }
-        [HttpPost("Book")]
+        [HttpPost("PostMusic")]
         public IActionResult AddMusicToRepository(string sessionID, int? userID, [FromBody] MuzykaDto music)
         {
             if (sessionID == null || userID == null) return BadRequest("Values cannot be null!");
+            var listToReturn = new List<MuzykaDto>();
             var user = UserRepository.userzy.Find(x => x.userID == userID);
             if (user.sessionID == sessionID)
             {
@@ -71,7 +72,12 @@ namespace ShelfItService.Controllers
                 music.typ = TypConst.typKsiazka;
                 listaMuzyki.Add(music);
                 Repository.maxPosID++;
-                return Ok();
+                foreach (var repo in user.repozytoria)
+                {
+                    var list = listaMuzyki.FindAll(x => x.repositoryID == repo.repozytoriumID);
+                    listToReturn.AddRange(list);
+                }
+                return Ok(listToReturn);
             }
             else return BadRequest("SessionID is not valid for user");
         }

@@ -12,7 +12,8 @@ namespace ShelfItService.Controllers
         [HttpGet]
         public IActionResult CheckStatus()
         {
-            return Ok("You are running ShelfItService");
+            //return Ok("You are running ShelfItService");
+            return Ok();
         }
     }
 }
