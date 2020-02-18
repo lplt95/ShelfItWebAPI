@@ -15,8 +15,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\DataAccess\DataAccess.csproj" />
-    <ProjectReference Include="..\DataRepositories\DataRepositories.csproj" />
     <ProjectReference Include="..\DataTransfer\DataTransfer.csproj" />
   </ItemGroup>
 
