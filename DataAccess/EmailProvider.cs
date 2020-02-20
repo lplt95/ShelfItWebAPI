@@ -45,7 +45,7 @@ namespace DataAccess
             try
             {
                 client.Send(message);
-                return "Success";
+                return "Success!";
             }
             catch (Exception ex)
             {

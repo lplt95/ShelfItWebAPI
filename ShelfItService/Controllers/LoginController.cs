@@ -25,7 +25,7 @@ namespace ShelfItService.Controllers
             if (userName == null || userPassword == null) return BadRequest("Values cannot be null!");
             if(repository.CheckPassword(userName, userPassword))
             {
-                UserDto user = listaUserow.Find(x => x.login == userName);
+                UserDto user = listaUserow.Find(x => x.email == userName);
                 if (!user.IsConfirmed) return BadRequest("You have to confirm your account!");
                 user.LogoutUser();
                 user.GenerateID();

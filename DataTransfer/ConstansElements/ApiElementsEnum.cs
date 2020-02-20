@@ -38,7 +38,7 @@ namespace DataTransfer
         }
         #endregion
         #region Confirm
-        public const string confirmLink = "http://192.168.1.215:61061/ShelfIt/User/Confirm?id=";
+        public const string confirmLink = "http://localhost:61061/ShelfIt/User/Confirm?id=";
         #endregion
     }
 }

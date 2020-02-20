@@ -61,5 +61,10 @@ namespace ShelfItService.Controllers
             }
             else return BadRequest("Cannot find predicted ID.");
         }
+        [HttpGet("UsersToConfirm")]
+        public IActionResult ShowUsersToConfirm()
+        {
+            return Ok(confirmRepo);
+        }
     }
 }

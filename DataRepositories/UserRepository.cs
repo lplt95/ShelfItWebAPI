@@ -14,7 +14,9 @@ namespace DataRepositories
         new UserDto()
             {
                 userID = 1,
-                login = "admin@admin.pl",
+                login = "admin",
+                email = "admin@admin.pl",
+                IsConfirmed = true,
                 password = new Crypto().GetHash("admin12345"),
                 repozytoria = new List<RepozytoriumDto>
                 {
@@ -46,7 +48,7 @@ namespace DataRepositories
         };
         public bool CheckPassword(string userName, string password)
         {
-            string userPassword = userzy.Find(x => x.login == userName).password;
+            string userPassword = userzy.Find(x => x.email == userName).password;
             return userPassword == password ? true : false;
         }
     }

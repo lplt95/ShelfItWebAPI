@@ -1,0 +1,23 @@
+Server=localhost\SQLEXPRESS;Database=master;Trusted_Connection=True;
+
+-------------------------
+
+CO TRZEBA JESZCZE ZROBIĆ?
+
+-- DESKTOP --
+
+1) podłączenie bazy danych - trzeba ją najpierw w ogóle stworzyć + zmodyfikować od razu diagramy
+2) dodawanie informacji o wypożyczeniach, o prośbach o wypożyczeniach
+3) wygląd panelu logowania i rejestracji
+4) repozytoria - po zaznaczeniu aktywnego, takie bazy danych się wyświetlają
+5) udostępnianie repozytoriów użytkownikom mobilnym - w tym wysyłanie zaproszeń, czyli linku do rejestracji
+
+
+
+-- MOBILE --
+
+1) wysyłanie próśb o wypożyczenie 
+2) wyświetlanie informacji komu została pożyczona dana pozycja
+3) możliwość postowania zmiany oceny i notatki (?) Ewentualnie do pozostawienia jedynie w aplikacji dekstopowej.
+4) rejestracja użytkownika mobilnego
+5) zmiana hasła/loginu
