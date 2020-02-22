@@ -28,6 +28,7 @@ namespace DataRepositories
             {
                 userID = 2,
                 login = "user",
+                email = "user@user.pl",
                 password = new Crypto().GetHash("123456"),
                 repozytoria = new List<RepozytoriumDto>
                 {
@@ -39,6 +40,7 @@ namespace DataRepositories
             {
                 userID = 3,
                 login = "paulaa94",
+                email = "paulaa94@paula.pl",
                 password = new Crypto().GetHash("b88bi3s"),
                 repozytoria = new List<RepozytoriumDto>
                 {

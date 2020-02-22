@@ -27,6 +27,7 @@ namespace ShelfItService.Controllers
         public IActionResult RegisterNewUser([FromBody] UserDto user)
         {
             if (user == null) return BadRequest("Values cannot be null!");
+            if (listaUserow.Find(x => x.email == user.email) != null) return BadRequest("Podany adres email jest już zarejestrowany w bazie!");
             user.userID = listaUserow.Max(x => x.userID) + 1;
             user.repozytoria = new List<RepozytoriumDto>() { new RepozytoriumDto()
             {
@@ -38,7 +39,7 @@ namespace ShelfItService.Controllers
             } };
             user.IsConfirmed = false;
             user.GenerateID();
-            string result = emailProvider.SendRegisterEmail(user, ApiElementsEnum.confirmLink + user.sessionID);
+            string result = emailProvider.SendRegisterEmail(user);
             if (result == "Success!")
             {
                 confirmRepo.Add(new UsersToConfirmDto() { generatedLinkHash = user.sessionID, userID = user.userID });
@@ -66,5 +67,24 @@ namespace ShelfItService.Controllers
         {
             return Ok(confirmRepo);
         }
+        [HttpPost("ChangePassword")]
+        public IActionResult ChangePassword([FromBody] ChangePass newPass)
+        {
+            if (newPass == null) return BadRequest("Values cannot be null!");
+            UserDto user = listaUserow.Find(x => x.userID == newPass.userID);
+            if (user.password == newPass.oldPassword)
+            {
+                if (emailProvider.SendChangePasswordEmail(user) != "Success!") return BadRequest("Something went wrong...");
+                user.password = newPass.newPassword;
+                return Ok();
+            }
+            else return BadRequest("Old password is not valid.");
+        }
+    }
+    public class ChangePass
+    {
+        public string oldPassword { get; set; }
+        public string newPassword { get; set; }
+        public int userID { get; set; }
     }
 }

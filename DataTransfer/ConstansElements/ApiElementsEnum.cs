@@ -37,8 +37,9 @@ namespace DataTransfer
             return GetBooksByAuthorUrl + id;
         }
         #endregion
-        #region Confirm
+        #region UserController
         public const string confirmLink = "http://localhost:61061/ShelfIt/User/Confirm?id=";
+        public const string changePassLink = "http://localhost:61061/ShelfIt/User/ChangePassword?id=";
         #endregion
     }
 }

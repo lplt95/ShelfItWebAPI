@@ -26,10 +26,23 @@ namespace DataAccess
                 Port = 587
             };
         }
-        public string SendRegisterEmail(UserDto user, string createdLink)
+        public string SendRegisterEmail(UserDto user)
         {
+            string createdLink = ApiElementsEnum.confirmLink + user.sessionID;
             EmailMessagesDto messageContent = EmailMessagesRepository.register;
             MailAddress userAddress = new MailAddress(user.email, user.login);
+            return SendMessage(userAddress, messageContent, createdLink);
+        }
+        public string SendChangePasswordEmail(UserDto user)
+        {
+            string createdLink = ApiElementsEnum.changePassLink + user.sessionID;
+            EmailMessagesDto messageContent = EmailMessagesRepository.changePass;
+            MailAddress userAddress = new MailAddress(user.email, user.login);
+            return SendMessage(userAddress, messageContent, createdLink);
+
+        }
+        private string SendMessage(MailAddress userAddress, EmailMessagesDto messageContent, string createdLink)
+        {
             MailMessage message = new MailMessage(serviceAddress, userAddress)
             {
                 IsBodyHtml = true,
