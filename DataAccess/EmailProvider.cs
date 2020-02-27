@@ -32,13 +32,11 @@ namespace DataAccess
             EmailMessagesDto messageContent = EmailMessagesRepository.register;
             return SendMessage(userAddress, messageContent, createdLink);
         }
-        public string SendChangePasswordEmail(UserDto user, string sessionID)
+        public string SendChangePasswordEmail(MailAddress userAddress, string sessionID)
         {
             string createdLink = ApiElementsEnum.changePassLink + sessionID;
             EmailMessagesDto messageContent = EmailMessagesRepository.changePass;
-            MailAddress userAddress = new MailAddress(user.email, user.login);
             return SendMessage(userAddress, messageContent, createdLink);
-
         }
         private string SendMessage(MailAddress userAddress, EmailMessagesDto messageContent, string createdLink)
         {

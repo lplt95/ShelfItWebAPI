@@ -11,9 +11,15 @@ namespace DataAccess
     public class BookDao
     {
         ShelfItBase database;
+        WydawcaDao wydawcaDao;
+        NotatkaDao notatkaDao;
+        AutorDao autorDao;
         public BookDao()
         {
             database = new ShelfItBase();
+            wydawcaDao = new WydawcaDao();
+            notatkaDao = new NotatkaDao();
+            autorDao = new AutorDao();
         }
         public List<KsiazkaDto> GetAllBooksForUser(UserDto user)
         {
@@ -25,6 +31,41 @@ namespace DataAccess
             }
             return ConvertToDto(ksiazkaList);
         }
+        public KsiazkaDto GetBook(UserDto user, int? idKsiazka)
+        {
+            var ksiazka = database.Ksiazka.Single(k => k.id == idKsiazka);
+            if (ksiazka == null) return null;
+            if (!VerifyBook(ksiazka, user.repozytoria)) return null;
+            return ConvertToDto(new List<Ksiazka>() { ksiazka }).FirstOrDefault();
+        }
+        public List<KsiazkaDto> AddBookToDatabase(KsiazkaDto ksiazka, UserDto user)
+        {
+            var position = new Pozycja()
+            {
+                id = database.Pozycja.Max(x => x.id) + 1,
+                tytul = ksiazka.tytul,
+                repozytorium_id = user.repozytoria.Find(x => x.dfltInd == "Y").repozytoriumID,
+                rokWydania = ksiazka.rokWydania,
+                typ = TypConst.Ksiazka,
+            };
+            var wydawca = database.Wydawca.Single(x => x.nazwa == ksiazka.wydawca);
+            if (wydawca != null) position.wydawca = wydawca.id;
+            else position.wydawca = wydawcaDao.AddWydawca(ksiazka.wydawca);
+            if (ksiazka.notatka != null) position.notatka = notatkaDao.AddNotatka(ksiazka.notatka);
+            if (ksiazka.ocena != null) position.ocena = ksiazka.ocena;
+            database.Pozycja.Add(position);
+            var book = new Ksiazka()
+            {
+                id = database.Ksiazka.Max(x => x.id) + 1,
+                okladka = ksiazka.Okladka,
+                iloscStron = ksiazka.IloscStron,
+                pozycja_id = position.id
+            };
+            database.Ksiazka.Add(book);
+            autorDao.ManageAutorsToPosition(ksiazka.autorzy, position.id);
+            return GetAllBooksForUser(user);
+        }
+        #region PrivateHelpers
         private List<KsiazkaDto> ConvertToDto(List<Ksiazka> ksiazkaList)
         {
             List<KsiazkaDto> listaKsiazek = new List<KsiazkaDto>();
@@ -66,5 +107,12 @@ namespace DataAccess
             }
             return listaKsiazek;
         }
+        private bool VerifyBook(Ksiazka ksiazka, List<RepozytoriumDto> repo)
+        {
+            var repository = repo.Find(x => x.repozytoriumID == ksiazka.Pozycja.repozytorium_id);
+            if (repository != null) return true;
+            else return false;
+        }
+        #endregion
     }
 }

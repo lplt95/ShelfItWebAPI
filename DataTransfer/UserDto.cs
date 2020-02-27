@@ -16,19 +16,11 @@ namespace DataTransfer
         public List<RepozytoriumDto> repozytoria { get; set; }
         public string sessionID { get; set; }
         public bool IsConfirmed { get; set; }
-        public void GenerateID()
-        {
-            var date = DateTime.Today;
-            int variable = date.Year + date.Month + date.Day + new Random().Next();
-            string toHash = login + variable;
-            MD5CryptoServiceProvider md5Crypto = new MD5CryptoServiceProvider();
-            byte[] _data = md5Crypto.ComputeHash(Encoding.Default.GetBytes(toHash));
-            StringBuilder _sBulider = new StringBuilder();
-            for (int i = 0; i < _data.Length; i++)
-            {
-                _sBulider.Append(_data[i].ToString("x2"));
-            }
-            sessionID = _sBulider.ToString();
-        }
+    }
+    public class ChangePass
+    {
+        public string oldPassword { get; set; }
+        public string newPassword { get; set; }
+        public int userID { get; set; }
     }
 }

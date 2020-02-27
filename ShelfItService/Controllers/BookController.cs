@@ -27,47 +27,24 @@ namespace ShelfItService.Controllers
             var listToReturn = bookDao.GetAllBooksForUser(user);
             return Ok(listToReturn);
         }
-        /*[HttpGet("Book")]
-        public IActionResult GetBook(int? id, int? userID)
+        [HttpGet("Book")]
+        public IActionResult GetBook(int? id, int? userID, string sessionID)
         {
-            if (id == null || userID == null) return BadRequest("Values cannot be null!");
-            var userRepo = UserRepository.userzy.Find(x => x.userID == userID).repozytoria;
-            var bookToReturn = listaKsiazek.FirstOrDefault(k => k.idKsiazka == id);
-            if(bookToReturn == null)
-            {
-                return NotFound();
-            }
-            if(!repository.VerifyBook(bookToReturn, userRepo))
-            {
-                return BadRequest("You don't have permission to access this resource");
-            }
+            if (id == null || userID == null || sessionID == null) return BadRequest("Values cannot be null!");
+            var user = userDao.GetUserByUserID(userID, sessionID);
+            if (user == null) return BadRequest("SessionID is not valid for user!");
+            var bookToReturn = bookDao.GetBook(user, id);
+            if (bookToReturn == null) return BadRequest("Book not found or you cannot see this record.");
             return Ok(bookToReturn);
         }
         [HttpPost("PostBook")]
         public IActionResult AddBookToRepository(string sessionID, int? userID, [FromBody] KsiazkaDto ksiazka)
         {
-            var listToReturn = new List<KsiazkaDto>();
             if (sessionID == null || userID == null) return BadRequest("Values cannot be null!");
-            var user = UserRepository.userzy.Find(x => x.userID == userID);
-            if (user.sessionID == sessionID)
-            {
-                if (ksiazka == null || ksiazka.tytul == null)
-                {
-                    return BadRequest("Values cannot be null!");
-                }
-                ksiazka.idPozycja = Repository.maxPosID++;
-                ksiazka.idKsiazka = listaKsiazek.Max(x => x.idKsiazka);
-                ksiazka.repositoryID = user.repozytoria.Find(x => x.dfltInd == "Y").repozytoriumID;
-                ksiazka.typ = TypConst.typKsiazka;
-                listaKsiazek.Add(ksiazka);
-                foreach (var repo in user.repozytoria)
-                {
-                    var list = listaKsiazek.FindAll(x => x.repositoryID == repo.repozytoriumID);
-                    listToReturn.AddRange(list);
-                }
-                return Ok(listToReturn);
-            }
-            else return BadRequest("SessionID is not valid for user");
-        }*/
+            var user = userDao.GetUserByUserID(userID, sessionID);
+            if (user == null) return BadRequest("SessionID is not valid for user!");
+            var bookToReturn = bookDao.AddBookToDatabase(ksiazka, user);
+            return Ok(bookToReturn);
+        }
     }
 }

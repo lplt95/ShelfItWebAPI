@@ -78,6 +78,49 @@ namespace DataAccess
             }
             return false;
         }
+        public bool ConfirmRegistration(string id, out string message)
+        {
+            var userConf = database.Uzytkownik_Potwierdzenie.Single(x => x.generatedLinkHash == id);
+            if (userConf == null)
+            {
+                message = "Cannot find predicted ID";
+                return false;
+            }
+            var user = database.Uzytkownik.Single(x => x.id == userConf.uzytkownik_id);
+            user.IsConfirmed = true;
+            database.Uzytkownik_Potwierdzenie.Remove(userConf);
+            database.SaveChanges();
+            message = "Email is confirmed. You can login into app now.";
+            return true;
+        }
+        public bool ChangePassword(ChangePass newPass, out string message)
+        {
+            var user = database.Uzytkownik.Single(x => x.id == newPass.userID && x.password == newPass.oldPassword);
+            if (user == null)
+            {
+                message = "Wrong login or password!";
+                return false;
+            }
+            string session = GenerateSessionID(user.login);
+            var mailAddress = new MailAddress(user.email, user.login);
+            var result = provider.SendChangePasswordEmail(mailAddress, session);
+            if(result == "Success!")
+            {
+                user.password = newPass.newPassword;
+                var confirm = new Uzytkownik_Potwierdzenie()
+                {
+                    id = database.Uzytkownik_Potwierdzenie.Max(x => x.id) + 1,
+                    generatedLinkHash = session,
+                    uzytkownik_id = user.id
+                };
+                database.Uzytkownik_Potwierdzenie.Add(confirm);
+                database.SaveChanges();
+                message = "Password was changed";
+                return true;
+            }
+            message = "Ops! Something went wrong. Password didn't changed";
+            return false;
+        }
         /// <summary>
         /// ONLY FOR TEST!!!
         /// </summary>
