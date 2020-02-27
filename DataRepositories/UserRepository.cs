@@ -15,7 +15,7 @@ namespace DataRepositories
             {
                 userID = 1,
                 login = "admin",
-                email = "admin@admin.pl",
+                email = "paulaa94@gmail.com",
                 IsConfirmed = true,
                 password = new Crypto().GetHash("admin12345"),
                 repozytoria = new List<RepozytoriumDto>

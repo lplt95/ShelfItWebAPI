@@ -19,8 +19,8 @@ namespace DataRepositories
         public static EmailMessagesDto changePass = new EmailMessagesDto()
         {
             subject = "Zmiana hasła w aplikacji ShelfIt",
-            body = "",
-            phrasesToChange = new List<string>() { "<<<link>>>"}
-        }
+            body = "Czy hasło zostało zmienione przez Ciebie?<br><br>Zauważyliśmy, że niedawno zmieniono hasło do Twojego konta ShelfIt. Jeśli to nie Ty, natychmiast kliknij w ten <<<link>>>.Jeśli to Ty zignoruj ten e - mail. ",
+            phrasesToChange = new List<string>() { "<<<link>>>" }
+        };
     }
 }

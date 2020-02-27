@@ -80,6 +80,12 @@ namespace ShelfItService.Controllers
             }
             else return BadRequest("Old password is not valid.");
         }
+        [HttpPost("RemoveChangedPass")]
+        public IActionResult RemoveChangedPass(string id)
+        {
+
+            return Ok();
+        }
     }
     public class ChangePass
     {
