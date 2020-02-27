@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using DataRepositories;
+using DataAccess;
 using DataTransfer;
 
 namespace ShelfItService.Controllers
@@ -11,31 +11,23 @@ namespace ShelfItService.Controllers
     [Route("ShelfIt/Book")]
     public class BookController : Controller
     {
-        List<KsiazkaDto> listaKsiazek;
-        BookRepository repository;
+        BookDao bookDao;
+        UserDao userDao;
         public BookController()
         {
-            repository = new BookRepository();
-            listaKsiazek = BookRepository.ksiazki;
+            bookDao = new BookDao();
+            userDao = new UserDao();
         }
         [HttpGet()]
         public IActionResult GetAllUsersBook(string sessionID, int? userID)
         {
             if (sessionID == null || userID == null) return BadRequest("Values cannot be null!");
-            var user = UserRepository.userzy.Find(x => x.userID == userID);
-            var listToReturn = new List<KsiazkaDto>();
-            if(user.sessionID == sessionID)
-            {
-                foreach(var repo in user.repozytoria)
-                {
-                    var list = listaKsiazek.FindAll(x => x.repositoryID == repo.repozytoriumID);
-                    listToReturn.AddRange(list);
-                }
-                return Ok(listToReturn);
-            }
-            else return BadRequest("SessionID is not valid for user");
+            var user = userDao.GetUserByUserID(userID, sessionID);
+            if (user == null) return BadRequest("SessionID is not valid for user!");
+            var listToReturn = bookDao.GetAllBooksForUser(user);
+            return Ok(listToReturn);
         }
-        [HttpGet("Book")]
+        /*[HttpGet("Book")]
         public IActionResult GetBook(int? id, int? userID)
         {
             if (id == null || userID == null) return BadRequest("Values cannot be null!");
@@ -65,7 +57,7 @@ namespace ShelfItService.Controllers
                 }
                 ksiazka.idPozycja = Repository.maxPosID++;
                 ksiazka.idKsiazka = listaKsiazek.Max(x => x.idKsiazka);
-                ksiazka.repositoryID = user.repozytoria.Find(x => x.dfltInd == 'Y').repozytoriumID;
+                ksiazka.repositoryID = user.repozytoria.Find(x => x.dfltInd == "Y").repozytoriumID;
                 ksiazka.typ = TypConst.typKsiazka;
                 listaKsiazek.Add(ksiazka);
                 foreach (var repo in user.repozytoria)
@@ -76,6 +68,6 @@ namespace ShelfItService.Controllers
                 return Ok(listToReturn);
             }
             else return BadRequest("SessionID is not valid for user");
-        }
+        }*/
     }
 }

@@ -11,7 +11,7 @@ namespace ShelfItService.Controllers
     [Route("ShelfIt/Film")]
     public class FilmController : Controller
     {
-        List<FilmDto> listaFilmow;
+        /*List<FilmDto> listaFilmow;
         FilmRepository repository;
         public FilmController()
         {
@@ -68,7 +68,7 @@ namespace ShelfItService.Controllers
                 }
                 film.idPozycja = Repository.maxPosID++;
                 film.idFilm = listaFilmow.Max(x => x.idFilm);
-                film.repositoryID = user.repozytoria.Find(x => x.dfltInd == 'Y').repozytoriumID;
+                film.repositoryID = user.repozytoria.Find(x => x.dfltInd == "Y").repozytoriumID;
                 film.typ = TypConst.typKsiazka;
                 listaFilmow.Add(film);
                 foreach (var repo in user.repozytoria)
@@ -79,6 +79,6 @@ namespace ShelfItService.Controllers
                 return Ok(listToReturn);
             }
             else return BadRequest("SessionID is not valid for user");
-        }
+        }*/
     }
 }

@@ -12,7 +12,7 @@ namespace ShelfItService.Controllers
     [Route("ShelfIt/User")]
     public class UserController : Controller
     {
-        UserRepository repo;
+        /*UserRepository repo;
         List<UsersToConfirmDto> confirmRepo;
         List<UserDto> listaUserow;
         EmailProvider emailProvider;
@@ -34,7 +34,7 @@ namespace ShelfItService.Controllers
                 repozytoriumID = UserRepository.repoMax,
                 repoNumber = 1,
                 wlascicielID = user.userID,
-                dfltInd = 'Y',
+                dfltInd = "Y",
                 nazwa = "Default"
             } };
             user.IsConfirmed = false;
@@ -43,7 +43,6 @@ namespace ShelfItService.Controllers
             if (result == "Success!")
             {
                 confirmRepo.Add(new UsersToConfirmDto() { generatedLinkHash = user.sessionID, userID = user.userID });
-                user.LogoutUser();
                 listaUserow.Add(user);
                 return Ok(result);
             }
@@ -85,7 +84,7 @@ namespace ShelfItService.Controllers
         {
 
             return Ok();
-        }
+        }*/
     }
     public class ChangePass
     {

@@ -11,7 +11,7 @@ namespace ShelfItService.Controllers
     [Route("ShelfIt/Music")]
     public class MusicController : Controller
     {
-        List<MuzykaDto> listaMuzyki;
+        /*List<MuzykaDto> listaMuzyki;
         MusicRepository repository;
         public MusicController()
         {
@@ -79,6 +79,6 @@ namespace ShelfItService.Controllers
                 return Ok(listToReturn);
             }
             else return BadRequest("SessionID is not valid for user");
-        }
+        }*/
     }
 }

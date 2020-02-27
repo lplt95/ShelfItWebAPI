@@ -14,7 +14,7 @@ namespace DataTransfer
         public string login { get; set; }
         public string password { get; set; }
         public List<RepozytoriumDto> repozytoria { get; set; }
-        public string sessionID { get; private set; }
+        public string sessionID { get; set; }
         public bool IsConfirmed { get; set; }
         public void GenerateID()
         {
@@ -29,10 +29,6 @@ namespace DataTransfer
                 _sBulider.Append(_data[i].ToString("x2"));
             }
             sessionID = _sBulider.ToString();
-        }
-        public void LogoutUser()
-        {
-            sessionID = null;
         }
     }
 }

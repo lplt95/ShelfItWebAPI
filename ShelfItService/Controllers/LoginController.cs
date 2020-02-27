@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using DataRepositories;
+using DataAccess;
 using DataTransfer;
 
 
@@ -12,38 +12,26 @@ namespace ShelfItService.Controllers
     [Route("ShelfIt/Login")]
     public class LoginController : Controller
     {
-        List<UserDto> listaUserow;
-        UserRepository repository;
+        UserDao userDao;
         public LoginController()
         {
-            repository = new UserRepository();
-            listaUserow = UserRepository.userzy;
+            userDao = new UserDao();
         }
         [HttpGet("In")]
         public IActionResult LoginUser(string userName, string userPassword)
         {
             if (userName == null || userPassword == null) return BadRequest("Values cannot be null!");
-            if(repository.CheckPassword(userName, userPassword))
-            {
-                UserDto user = listaUserow.Find(x => x.email == userName);
-                if (!user.IsConfirmed) return BadRequest("You have to confirm your account!");
-                user.LogoutUser();
-                user.GenerateID();
-                return Ok(user.userID + ", " + user.sessionID);
-            }
-            else return BadRequest("Wrong login or password!");
+            var user = userDao.LoginUser(userName, userPassword);
+            if (user == null) return BadRequest("Wrong login or password!");
+            return Ok(user.userID + ", " + user.sessionID);
         }
         [HttpGet("Out")]
         public IActionResult LogoutUser(int? userID, string sessionID)
         {
             if (userID == null || sessionID == null) return BadRequest("Values cannot be null!");
-            var user = listaUserow.Find(x => x.userID == userID);
-            if (user.sessionID == sessionID)
-            {
-                user.LogoutUser();
-                return Ok();
-            }
-            else return BadRequest();
+            var isSuccess = userDao.LogoutUser(userID, sessionID);
+            if (!isSuccess) return BadRequest("Failed to logout user! Data was wrong!");
+            return Ok();
         }
     }
 }

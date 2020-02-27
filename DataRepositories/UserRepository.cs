@@ -20,8 +20,8 @@ namespace DataRepositories
                 password = new Crypto().GetHash("admin12345"),
                 repozytoria = new List<RepozytoriumDto>
                 {
-                    new RepozytoriumDto { repozytoriumID = 1, wlascicielID = 1, nazwa = "Default", repoNumber = 1, dfltInd = 'Y'},
-                    new RepozytoriumDto { repozytoriumID = 2, wlascicielID = 1, nazwa = "Repo testowe", repoNumber = 2, dfltInd = 'N'}
+                    new RepozytoriumDto { repozytoriumID = 1, wlascicielID = 1, nazwa = "Default", repoNumber = 1, dfltInd = "Y"},
+                    new RepozytoriumDto { repozytoriumID = 2, wlascicielID = 1, nazwa = "Repo testowe", repoNumber = 2, dfltInd = "N"}
                 }
             },
             new UserDto()
@@ -32,7 +32,7 @@ namespace DataRepositories
                 password = new Crypto().GetHash("123456"),
                 repozytoria = new List<RepozytoriumDto>
                 {
-                    new RepozytoriumDto { repozytoriumID = 3, wlascicielID = 1, nazwa = "Default", repoNumber = 1, dfltInd = 'Y'},
+                    new RepozytoriumDto { repozytoriumID = 3, wlascicielID = 1, nazwa = "Default", repoNumber = 1, dfltInd = "Y"},
                 }
 
             },
@@ -44,7 +44,7 @@ namespace DataRepositories
                 password = new Crypto().GetHash("b88bi3s"),
                 repozytoria = new List<RepozytoriumDto>
                 {
-                    new RepozytoriumDto { repozytoriumID = 4, wlascicielID = 1, nazwa = "Default", repoNumber = 1, dfltInd = 'Y'},
+                    new RepozytoriumDto { repozytoriumID = 4, wlascicielID = 1, nazwa = "Default", repoNumber = 1, dfltInd = "Y"},
                 }
             }
         };

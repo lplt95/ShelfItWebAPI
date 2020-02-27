@@ -1,0 +1,1163 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="ShelfItModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Autor">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="imie" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="nazwisko" Type="varchar" MaxLength="20" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Autor_Pozycja">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="pozycja_id" Type="int" Nullable="false" />
+          <Property Name="autor_id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Film">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="dlugoscTrwania" Type="int" Nullable="false" />
+          <Property Name="pozycja_id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Ksiazka">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="iloscStron" Type="int" Nullable="false" />
+          <Property Name="okladka" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="pozycja_id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Muzyka">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="iloscSciezek" Type="int" Nullable="false" />
+          <Property Name="iloscPlyt" Type="int" Nullable="false" />
+          <Property Name="pozycja_id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Notatka">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="tresc" Type="varchar" MaxLength="250" Nullable="false" />
+          <Property Name="data" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Ocena">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="ocena" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Poz_App_Mobilna">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="tytul" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="uzytkownik_id" Type="int" Nullable="false" />
+          <Property Name="typ_id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Pozycja">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="repozytorium_id" Type="int" Nullable="false" />
+          <Property Name="tytul" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="rokWydania" Type="int" Nullable="false" />
+          <Property Name="udostepnioneDla" Type="int" />
+          <Property Name="typ" Type="int" Nullable="false" />
+          <Property Name="notatka" Type="int" />
+          <Property Name="ocena" Type="int" />
+          <Property Name="wydawca" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Prosby_Wypozyczen">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="uzytkownik_id" Type="int" Nullable="false" />
+          <Property Name="data" Type="datetime" Nullable="false" />
+          <Property Name="pozycja_id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Repozytorium">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="uzytkownik_id" Type="int" Nullable="false" />
+          <Property Name="nazwa" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="domyslny_id" Type="char" MaxLength="1" Nullable="false" />
+          <Property Name="numer_repoz" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Typ">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="nazwa" Type="varchar" MaxLength="15" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Uzytkownik">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="email" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="login" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="password" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="sessionID" Type="varchar" MaxLength="50" />
+          <Property Name="IsConfirmed" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Uzytkownik_Potwierdzenie">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="uzytkownik_id" Type="int" Nullable="false" />
+          <Property Name="generatedLinkHash" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Wydawca">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="nazwa" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Wypozyczenie">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="uzytkownik_id" Type="int" Nullable="false" />
+          <Property Name="pozycja_id" Type="int" Nullable="false" />
+          <Property Name="wypozyczoneDnia" Type="datetime" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Autor_Pozycja_Autor">
+          <End Role="Autor" Type="Self.Autor" Multiplicity="1" />
+          <End Role="Autor_Pozycja" Type="Self.Autor_Pozycja" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Autor">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Autor_Pozycja">
+              <PropertyRef Name="autor_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Autor_Pozycja_Pozycja">
+          <End Role="Pozycja" Type="Self.Pozycja" Multiplicity="1" />
+          <End Role="Autor_Pozycja" Type="Self.Autor_Pozycja" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Pozycja">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Autor_Pozycja">
+              <PropertyRef Name="pozycja_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Film_Pozycja">
+          <End Role="Pozycja" Type="Self.Pozycja" Multiplicity="1" />
+          <End Role="Film" Type="Self.Film" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Pozycja">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Film">
+              <PropertyRef Name="pozycja_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Ksiazka_Pozycja">
+          <End Role="Pozycja" Type="Self.Pozycja" Multiplicity="1" />
+          <End Role="Ksiazka" Type="Self.Ksiazka" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Pozycja">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Ksiazka">
+              <PropertyRef Name="pozycja_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Muzyka_Pozycja">
+          <End Role="Pozycja" Type="Self.Pozycja" Multiplicity="1" />
+          <End Role="Muzyka" Type="Self.Muzyka" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Pozycja">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Muzyka">
+              <PropertyRef Name="pozycja_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Poz_App_Mobilna_Typ">
+          <End Role="Typ" Type="Self.Typ" Multiplicity="1" />
+          <End Role="Poz_App_Mobilna" Type="Self.Poz_App_Mobilna" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Typ">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Poz_App_Mobilna">
+              <PropertyRef Name="typ_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Poz_App_Mobilna_Uzytkownik">
+          <End Role="Uzytkownik" Type="Self.Uzytkownik" Multiplicity="1" />
+          <End Role="Poz_App_Mobilna" Type="Self.Poz_App_Mobilna" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Uzytkownik">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Poz_App_Mobilna">
+              <PropertyRef Name="uzytkownik_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Pozycja_Notatka">
+          <End Role="Notatka" Type="Self.Notatka" Multiplicity="0..1" />
+          <End Role="Pozycja" Type="Self.Pozycja" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Notatka">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Pozycja">
+              <PropertyRef Name="notatka" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Pozycja_Ocena">
+          <End Role="Ocena" Type="Self.Ocena" Multiplicity="0..1" />
+          <End Role="Pozycja" Type="Self.Pozycja" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ocena">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Pozycja">
+              <PropertyRef Name="ocena" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Pozycja_Repozytorium">
+          <End Role="Repozytorium" Type="Self.Repozytorium" Multiplicity="1" />
+          <End Role="Pozycja" Type="Self.Pozycja" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Repozytorium">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Pozycja">
+              <PropertyRef Name="repozytorium_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Pozycja_Typ">
+          <End Role="Typ" Type="Self.Typ" Multiplicity="1" />
+          <End Role="Pozycja" Type="Self.Pozycja" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Typ">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Pozycja">
+              <PropertyRef Name="typ" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Pozycja_Uzytkownik">
+          <End Role="Uzytkownik" Type="Self.Uzytkownik" Multiplicity="0..1" />
+          <End Role="Pozycja" Type="Self.Pozycja" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Uzytkownik">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Pozycja">
+              <PropertyRef Name="udostepnioneDla" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Pozycja_Wydawca">
+          <End Role="Wydawca" Type="Self.Wydawca" Multiplicity="1" />
+          <End Role="Pozycja" Type="Self.Pozycja" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Wydawca">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Pozycja">
+              <PropertyRef Name="wydawca" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Prosby_Wypozyczen_Pozycja">
+          <End Role="Pozycja" Type="Self.Pozycja" Multiplicity="1" />
+          <End Role="Prosby_Wypozyczen" Type="Self.Prosby_Wypozyczen" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Pozycja">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Prosby_Wypozyczen">
+              <PropertyRef Name="pozycja_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Prosby_Wypozyczen_Uzytkownik">
+          <End Role="Uzytkownik" Type="Self.Uzytkownik" Multiplicity="1" />
+          <End Role="Prosby_Wypozyczen" Type="Self.Prosby_Wypozyczen" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Uzytkownik">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Prosby_Wypozyczen">
+              <PropertyRef Name="uzytkownik_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Repozytorium_Uzytkownik">
+          <End Role="Uzytkownik" Type="Self.Uzytkownik" Multiplicity="1" />
+          <End Role="Repozytorium" Type="Self.Repozytorium" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Uzytkownik">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Repozytorium">
+              <PropertyRef Name="uzytkownik_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Uzytkownik_Potwierdzenie_Uzytkownik">
+          <End Role="Uzytkownik" Type="Self.Uzytkownik" Multiplicity="1" />
+          <End Role="Uzytkownik_Potwierdzenie" Type="Self.Uzytkownik_Potwierdzenie" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Uzytkownik">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Uzytkownik_Potwierdzenie">
+              <PropertyRef Name="uzytkownik_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Wypozyczenie_Pozycja">
+          <End Role="Pozycja" Type="Self.Pozycja" Multiplicity="1" />
+          <End Role="Wypozyczenie" Type="Self.Wypozyczenie" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Pozycja">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Wypozyczenie">
+              <PropertyRef Name="pozycja_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Wypozyczenie_Uzytkownik">
+          <End Role="Uzytkownik" Type="Self.Uzytkownik" Multiplicity="1" />
+          <End Role="Wypozyczenie" Type="Self.Wypozyczenie" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Uzytkownik">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Wypozyczenie">
+              <PropertyRef Name="uzytkownik_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ShelfItModelStoreContainer">
+          <EntitySet Name="Autor" EntityType="Self.Autor" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Autor_Pozycja" EntityType="Self.Autor_Pozycja" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Film" EntityType="Self.Film" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Ksiazka" EntityType="Self.Ksiazka" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Muzyka" EntityType="Self.Muzyka" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Notatka" EntityType="Self.Notatka" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Ocena" EntityType="Self.Ocena" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Poz_App_Mobilna" EntityType="Self.Poz_App_Mobilna" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Pozycja" EntityType="Self.Pozycja" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Prosby_Wypozyczen" EntityType="Self.Prosby_Wypozyczen" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Repozytorium" EntityType="Self.Repozytorium" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Typ" EntityType="Self.Typ" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Uzytkownik" EntityType="Self.Uzytkownik" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Uzytkownik_Potwierdzenie" EntityType="Self.Uzytkownik_Potwierdzenie" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Wydawca" EntityType="Self.Wydawca" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Wypozyczenie" EntityType="Self.Wypozyczenie" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Autor_Pozycja_Autor" Association="Self.FK_Autor_Pozycja_Autor">
+            <End Role="Autor" EntitySet="Autor" />
+            <End Role="Autor_Pozycja" EntitySet="Autor_Pozycja" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Autor_Pozycja_Pozycja" Association="Self.FK_Autor_Pozycja_Pozycja">
+            <End Role="Pozycja" EntitySet="Pozycja" />
+            <End Role="Autor_Pozycja" EntitySet="Autor_Pozycja" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Film_Pozycja" Association="Self.FK_Film_Pozycja">
+            <End Role="Pozycja" EntitySet="Pozycja" />
+            <End Role="Film" EntitySet="Film" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Ksiazka_Pozycja" Association="Self.FK_Ksiazka_Pozycja">
+            <End Role="Pozycja" EntitySet="Pozycja" />
+            <End Role="Ksiazka" EntitySet="Ksiazka" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Muzyka_Pozycja" Association="Self.FK_Muzyka_Pozycja">
+            <End Role="Pozycja" EntitySet="Pozycja" />
+            <End Role="Muzyka" EntitySet="Muzyka" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Poz_App_Mobilna_Typ" Association="Self.FK_Poz_App_Mobilna_Typ">
+            <End Role="Typ" EntitySet="Typ" />
+            <End Role="Poz_App_Mobilna" EntitySet="Poz_App_Mobilna" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Poz_App_Mobilna_Uzytkownik" Association="Self.FK_Poz_App_Mobilna_Uzytkownik">
+            <End Role="Uzytkownik" EntitySet="Uzytkownik" />
+            <End Role="Poz_App_Mobilna" EntitySet="Poz_App_Mobilna" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Pozycja_Notatka" Association="Self.FK_Pozycja_Notatka">
+            <End Role="Notatka" EntitySet="Notatka" />
+            <End Role="Pozycja" EntitySet="Pozycja" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Pozycja_Ocena" Association="Self.FK_Pozycja_Ocena">
+            <End Role="Ocena" EntitySet="Ocena" />
+            <End Role="Pozycja" EntitySet="Pozycja" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Pozycja_Repozytorium" Association="Self.FK_Pozycja_Repozytorium">
+            <End Role="Repozytorium" EntitySet="Repozytorium" />
+            <End Role="Pozycja" EntitySet="Pozycja" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Pozycja_Typ" Association="Self.FK_Pozycja_Typ">
+            <End Role="Typ" EntitySet="Typ" />
+            <End Role="Pozycja" EntitySet="Pozycja" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Pozycja_Uzytkownik" Association="Self.FK_Pozycja_Uzytkownik">
+            <End Role="Uzytkownik" EntitySet="Uzytkownik" />
+            <End Role="Pozycja" EntitySet="Pozycja" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Pozycja_Wydawca" Association="Self.FK_Pozycja_Wydawca">
+            <End Role="Wydawca" EntitySet="Wydawca" />
+            <End Role="Pozycja" EntitySet="Pozycja" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Prosby_Wypozyczen_Pozycja" Association="Self.FK_Prosby_Wypozyczen_Pozycja">
+            <End Role="Pozycja" EntitySet="Pozycja" />
+            <End Role="Prosby_Wypozyczen" EntitySet="Prosby_Wypozyczen" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Prosby_Wypozyczen_Uzytkownik" Association="Self.FK_Prosby_Wypozyczen_Uzytkownik">
+            <End Role="Uzytkownik" EntitySet="Uzytkownik" />
+            <End Role="Prosby_Wypozyczen" EntitySet="Prosby_Wypozyczen" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Repozytorium_Uzytkownik" Association="Self.FK_Repozytorium_Uzytkownik">
+            <End Role="Uzytkownik" EntitySet="Uzytkownik" />
+            <End Role="Repozytorium" EntitySet="Repozytorium" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Uzytkownik_Potwierdzenie_Uzytkownik" Association="Self.FK_Uzytkownik_Potwierdzenie_Uzytkownik">
+            <End Role="Uzytkownik" EntitySet="Uzytkownik" />
+            <End Role="Uzytkownik_Potwierdzenie" EntitySet="Uzytkownik_Potwierdzenie" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Wypozyczenie_Pozycja" Association="Self.FK_Wypozyczenie_Pozycja">
+            <End Role="Pozycja" EntitySet="Pozycja" />
+            <End Role="Wypozyczenie" EntitySet="Wypozyczenie" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Wypozyczenie_Uzytkownik" Association="Self.FK_Wypozyczenie_Uzytkownik">
+            <End Role="Uzytkownik" EntitySet="Uzytkownik" />
+            <End Role="Wypozyczenie" EntitySet="Wypozyczenie" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="ShelfItModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Autor">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="imie" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="nazwisko" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Autor_Pozycja" Relationship="Self.FK_Autor_Pozycja_Autor" FromRole="Autor" ToRole="Autor_Pozycja" />
+        </EntityType>
+        <EntityType Name="Autor_Pozycja">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="pozycja_id" Type="Int32" Nullable="false" />
+          <Property Name="autor_id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Autor" Relationship="Self.FK_Autor_Pozycja_Autor" FromRole="Autor_Pozycja" ToRole="Autor" />
+          <NavigationProperty Name="Pozycja" Relationship="Self.FK_Autor_Pozycja_Pozycja" FromRole="Autor_Pozycja" ToRole="Pozycja" />
+        </EntityType>
+        <EntityType Name="Film">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="dlugoscTrwania" Type="Int32" Nullable="false" />
+          <Property Name="pozycja_id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Pozycja" Relationship="Self.FK_Film_Pozycja" FromRole="Film" ToRole="Pozycja" />
+        </EntityType>
+        <EntityType Name="Ksiazka">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="iloscStron" Type="Int32" Nullable="false" />
+          <Property Name="okladka" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="pozycja_id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Pozycja" Relationship="Self.FK_Ksiazka_Pozycja" FromRole="Ksiazka" ToRole="Pozycja" />
+        </EntityType>
+        <EntityType Name="Muzyka">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="iloscSciezek" Type="Int32" Nullable="false" />
+          <Property Name="iloscPlyt" Type="Int32" Nullable="false" />
+          <Property Name="pozycja_id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Pozycja" Relationship="Self.FK_Muzyka_Pozycja" FromRole="Muzyka" ToRole="Pozycja" />
+        </EntityType>
+        <EntityType Name="Notatka">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="tresc" Type="String" MaxLength="250" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="data" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Pozycja" Relationship="Self.FK_Pozycja_Notatka" FromRole="Notatka" ToRole="Pozycja" />
+        </EntityType>
+        <EntityType Name="Ocena">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="ocena1" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Pozycja" Relationship="Self.FK_Pozycja_Ocena" FromRole="Ocena" ToRole="Pozycja" />
+        </EntityType>
+        <EntityType Name="Poz_App_Mobilna">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="tytul" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="uzytkownik_id" Type="Int32" Nullable="false" />
+          <Property Name="typ_id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Typ" Relationship="Self.FK_Poz_App_Mobilna_Typ" FromRole="Poz_App_Mobilna" ToRole="Typ" />
+          <NavigationProperty Name="Uzytkownik" Relationship="Self.FK_Poz_App_Mobilna_Uzytkownik" FromRole="Poz_App_Mobilna" ToRole="Uzytkownik" />
+        </EntityType>
+        <EntityType Name="Pozycja">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="repozytorium_id" Type="Int32" Nullable="false" />
+          <Property Name="tytul" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="rokWydania" Type="Int32" Nullable="false" />
+          <Property Name="udostepnioneDla" Type="Int32" />
+          <Property Name="typ" Type="Int32" Nullable="false" />
+          <Property Name="notatka" Type="Int32" />
+          <Property Name="ocena" Type="Int32" />
+          <Property Name="wydawca" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Autor_Pozycja" Relationship="Self.FK_Autor_Pozycja_Pozycja" FromRole="Pozycja" ToRole="Autor_Pozycja" />
+          <NavigationProperty Name="Film" Relationship="Self.FK_Film_Pozycja" FromRole="Pozycja" ToRole="Film" />
+          <NavigationProperty Name="Ksiazka" Relationship="Self.FK_Ksiazka_Pozycja" FromRole="Pozycja" ToRole="Ksiazka" />
+          <NavigationProperty Name="Muzyka" Relationship="Self.FK_Muzyka_Pozycja" FromRole="Pozycja" ToRole="Muzyka" />
+          <NavigationProperty Name="Notatka1" Relationship="Self.FK_Pozycja_Notatka" FromRole="Pozycja" ToRole="Notatka" />
+          <NavigationProperty Name="Ocena1" Relationship="Self.FK_Pozycja_Ocena" FromRole="Pozycja" ToRole="Ocena" />
+          <NavigationProperty Name="Repozytorium" Relationship="Self.FK_Pozycja_Repozytorium" FromRole="Pozycja" ToRole="Repozytorium" />
+          <NavigationProperty Name="Typ1" Relationship="Self.FK_Pozycja_Typ" FromRole="Pozycja" ToRole="Typ" />
+          <NavigationProperty Name="Uzytkownik" Relationship="Self.FK_Pozycja_Uzytkownik" FromRole="Pozycja" ToRole="Uzytkownik" />
+          <NavigationProperty Name="Wydawca1" Relationship="Self.FK_Pozycja_Wydawca" FromRole="Pozycja" ToRole="Wydawca" />
+          <NavigationProperty Name="Prosby_Wypozyczen" Relationship="Self.FK_Prosby_Wypozyczen_Pozycja" FromRole="Pozycja" ToRole="Prosby_Wypozyczen" />
+          <NavigationProperty Name="Wypozyczenie" Relationship="Self.FK_Wypozyczenie_Pozycja" FromRole="Pozycja" ToRole="Wypozyczenie" />
+        </EntityType>
+        <EntityType Name="Prosby_Wypozyczen">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="uzytkownik_id" Type="Int32" Nullable="false" />
+          <Property Name="data" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="pozycja_id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Pozycja" Relationship="Self.FK_Prosby_Wypozyczen_Pozycja" FromRole="Prosby_Wypozyczen" ToRole="Pozycja" />
+          <NavigationProperty Name="Uzytkownik" Relationship="Self.FK_Prosby_Wypozyczen_Uzytkownik" FromRole="Prosby_Wypozyczen" ToRole="Uzytkownik" />
+        </EntityType>
+        <EntityType Name="Repozytorium">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="uzytkownik_id" Type="Int32" Nullable="false" />
+          <Property Name="nazwa" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="domyslny_id" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="numer_repoz" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Pozycja" Relationship="Self.FK_Pozycja_Repozytorium" FromRole="Repozytorium" ToRole="Pozycja" />
+          <NavigationProperty Name="Uzytkownik" Relationship="Self.FK_Repozytorium_Uzytkownik" FromRole="Repozytorium" ToRole="Uzytkownik" />
+        </EntityType>
+        <EntityType Name="Typ">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="nazwa" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Poz_App_Mobilna" Relationship="Self.FK_Poz_App_Mobilna_Typ" FromRole="Typ" ToRole="Poz_App_Mobilna" />
+          <NavigationProperty Name="Pozycja" Relationship="Self.FK_Pozycja_Typ" FromRole="Typ" ToRole="Pozycja" />
+        </EntityType>
+        <EntityType Name="Uzytkownik">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="login" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="password" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="sessionID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="IsConfirmed" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Poz_App_Mobilna" Relationship="Self.FK_Poz_App_Mobilna_Uzytkownik" FromRole="Uzytkownik" ToRole="Poz_App_Mobilna" />
+          <NavigationProperty Name="Pozycja" Relationship="Self.FK_Pozycja_Uzytkownik" FromRole="Uzytkownik" ToRole="Pozycja" />
+          <NavigationProperty Name="Prosby_Wypozyczen" Relationship="Self.FK_Prosby_Wypozyczen_Uzytkownik" FromRole="Uzytkownik" ToRole="Prosby_Wypozyczen" />
+          <NavigationProperty Name="Repozytorium" Relationship="Self.FK_Repozytorium_Uzytkownik" FromRole="Uzytkownik" ToRole="Repozytorium" />
+          <NavigationProperty Name="Uzytkownik_Potwierdzenie" Relationship="Self.FK_Uzytkownik_Potwierdzenie_Uzytkownik" FromRole="Uzytkownik" ToRole="Uzytkownik_Potwierdzenie" />
+          <NavigationProperty Name="Wypozyczenie" Relationship="Self.FK_Wypozyczenie_Uzytkownik" FromRole="Uzytkownik" ToRole="Wypozyczenie" />
+        </EntityType>
+        <EntityType Name="Uzytkownik_Potwierdzenie">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="uzytkownik_id" Type="Int32" Nullable="false" />
+          <Property Name="generatedLinkHash" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Uzytkownik" Relationship="Self.FK_Uzytkownik_Potwierdzenie_Uzytkownik" FromRole="Uzytkownik_Potwierdzenie" ToRole="Uzytkownik" />
+        </EntityType>
+        <EntityType Name="Wydawca">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="nazwa" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Pozycja" Relationship="Self.FK_Pozycja_Wydawca" FromRole="Wydawca" ToRole="Pozycja" />
+        </EntityType>
+        <EntityType Name="Wypozyczenie">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="uzytkownik_id" Type="Int32" Nullable="false" />
+          <Property Name="pozycja_id" Type="Int32" Nullable="false" />
+          <Property Name="wypozyczoneDnia" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Pozycja" Relationship="Self.FK_Wypozyczenie_Pozycja" FromRole="Wypozyczenie" ToRole="Pozycja" />
+          <NavigationProperty Name="Uzytkownik" Relationship="Self.FK_Wypozyczenie_Uzytkownik" FromRole="Wypozyczenie" ToRole="Uzytkownik" />
+        </EntityType>
+        <Association Name="FK_Autor_Pozycja_Autor">
+          <End Role="Autor" Type="Self.Autor" Multiplicity="1" />
+          <End Role="Autor_Pozycja" Type="Self.Autor_Pozycja" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Autor">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Autor_Pozycja">
+              <PropertyRef Name="autor_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Autor_Pozycja_Pozycja">
+          <End Role="Pozycja" Type="Self.Pozycja" Multiplicity="1" />
+          <End Role="Autor_Pozycja" Type="Self.Autor_Pozycja" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Pozycja">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Autor_Pozycja">
+              <PropertyRef Name="pozycja_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Film_Pozycja">
+          <End Role="Pozycja" Type="Self.Pozycja" Multiplicity="1" />
+          <End Role="Film" Type="Self.Film" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Pozycja">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Film">
+              <PropertyRef Name="pozycja_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Ksiazka_Pozycja">
+          <End Role="Pozycja" Type="Self.Pozycja" Multiplicity="1" />
+          <End Role="Ksiazka" Type="Self.Ksiazka" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Pozycja">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Ksiazka">
+              <PropertyRef Name="pozycja_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Muzyka_Pozycja">
+          <End Role="Pozycja" Type="Self.Pozycja" Multiplicity="1" />
+          <End Role="Muzyka" Type="Self.Muzyka" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Pozycja">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Muzyka">
+              <PropertyRef Name="pozycja_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Pozycja_Notatka">
+          <End Role="Notatka" Type="Self.Notatka" Multiplicity="0..1" />
+          <End Role="Pozycja" Type="Self.Pozycja" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Notatka">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Pozycja">
+              <PropertyRef Name="notatka" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Pozycja_Ocena">
+          <End Role="Ocena" Type="Self.Ocena" Multiplicity="0..1" />
+          <End Role="Pozycja" Type="Self.Pozycja" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ocena">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Pozycja">
+              <PropertyRef Name="ocena" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Poz_App_Mobilna_Typ">
+          <End Role="Typ" Type="Self.Typ" Multiplicity="1" />
+          <End Role="Poz_App_Mobilna" Type="Self.Poz_App_Mobilna" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Typ">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Poz_App_Mobilna">
+              <PropertyRef Name="typ_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Poz_App_Mobilna_Uzytkownik">
+          <End Role="Uzytkownik" Type="Self.Uzytkownik" Multiplicity="1" />
+          <End Role="Poz_App_Mobilna" Type="Self.Poz_App_Mobilna" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Uzytkownik">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Poz_App_Mobilna">
+              <PropertyRef Name="uzytkownik_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Pozycja_Repozytorium">
+          <End Role="Repozytorium" Type="Self.Repozytorium" Multiplicity="1" />
+          <End Role="Pozycja" Type="Self.Pozycja" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Repozytorium">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Pozycja">
+              <PropertyRef Name="repozytorium_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Pozycja_Typ">
+          <End Role="Typ" Type="Self.Typ" Multiplicity="1" />
+          <End Role="Pozycja" Type="Self.Pozycja" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Typ">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Pozycja">
+              <PropertyRef Name="typ" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Pozycja_Uzytkownik">
+          <End Role="Uzytkownik" Type="Self.Uzytkownik" Multiplicity="0..1" />
+          <End Role="Pozycja" Type="Self.Pozycja" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Uzytkownik">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Pozycja">
+              <PropertyRef Name="udostepnioneDla" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Pozycja_Wydawca">
+          <End Role="Wydawca" Type="Self.Wydawca" Multiplicity="1" />
+          <End Role="Pozycja" Type="Self.Pozycja" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Wydawca">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Pozycja">
+              <PropertyRef Name="wydawca" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Prosby_Wypozyczen_Pozycja">
+          <End Role="Pozycja" Type="Self.Pozycja" Multiplicity="1" />
+          <End Role="Prosby_Wypozyczen" Type="Self.Prosby_Wypozyczen" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Pozycja">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Prosby_Wypozyczen">
+              <PropertyRef Name="pozycja_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Wypozyczenie_Pozycja">
+          <End Role="Pozycja" Type="Self.Pozycja" Multiplicity="1" />
+          <End Role="Wypozyczenie" Type="Self.Wypozyczenie" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Pozycja">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Wypozyczenie">
+              <PropertyRef Name="pozycja_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Prosby_Wypozyczen_Uzytkownik">
+          <End Role="Uzytkownik" Type="Self.Uzytkownik" Multiplicity="1" />
+          <End Role="Prosby_Wypozyczen" Type="Self.Prosby_Wypozyczen" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Uzytkownik">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Prosby_Wypozyczen">
+              <PropertyRef Name="uzytkownik_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Repozytorium_Uzytkownik">
+          <End Role="Uzytkownik" Type="Self.Uzytkownik" Multiplicity="1" />
+          <End Role="Repozytorium" Type="Self.Repozytorium" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Uzytkownik">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Repozytorium">
+              <PropertyRef Name="uzytkownik_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Uzytkownik_Potwierdzenie_Uzytkownik">
+          <End Role="Uzytkownik" Type="Self.Uzytkownik" Multiplicity="1" />
+          <End Role="Uzytkownik_Potwierdzenie" Type="Self.Uzytkownik_Potwierdzenie" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Uzytkownik">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Uzytkownik_Potwierdzenie">
+              <PropertyRef Name="uzytkownik_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Wypozyczenie_Uzytkownik">
+          <End Role="Uzytkownik" Type="Self.Uzytkownik" Multiplicity="1" />
+          <End Role="Wypozyczenie" Type="Self.Wypozyczenie" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Uzytkownik">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Wypozyczenie">
+              <PropertyRef Name="uzytkownik_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ShelfItBase" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Autor" EntityType="Self.Autor" />
+          <EntitySet Name="Autor_Pozycja" EntityType="Self.Autor_Pozycja" />
+          <EntitySet Name="Film" EntityType="Self.Film" />
+          <EntitySet Name="Ksiazka" EntityType="Self.Ksiazka" />
+          <EntitySet Name="Muzyka" EntityType="Self.Muzyka" />
+          <EntitySet Name="Notatka" EntityType="Self.Notatka" />
+          <EntitySet Name="Ocena" EntityType="Self.Ocena" />
+          <EntitySet Name="Poz_App_Mobilna" EntityType="Self.Poz_App_Mobilna" />
+          <EntitySet Name="Pozycja" EntityType="Self.Pozycja" />
+          <EntitySet Name="Prosby_Wypozyczen" EntityType="Self.Prosby_Wypozyczen" />
+          <EntitySet Name="Repozytorium" EntityType="Self.Repozytorium" />
+          <EntitySet Name="Typ" EntityType="Self.Typ" />
+          <EntitySet Name="Uzytkownik" EntityType="Self.Uzytkownik" />
+          <EntitySet Name="Uzytkownik_Potwierdzenie" EntityType="Self.Uzytkownik_Potwierdzenie" />
+          <EntitySet Name="Wydawca" EntityType="Self.Wydawca" />
+          <EntitySet Name="Wypozyczenie" EntityType="Self.Wypozyczenie" />
+          <AssociationSet Name="FK_Autor_Pozycja_Autor" Association="Self.FK_Autor_Pozycja_Autor">
+            <End Role="Autor" EntitySet="Autor" />
+            <End Role="Autor_Pozycja" EntitySet="Autor_Pozycja" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Autor_Pozycja_Pozycja" Association="Self.FK_Autor_Pozycja_Pozycja">
+            <End Role="Pozycja" EntitySet="Pozycja" />
+            <End Role="Autor_Pozycja" EntitySet="Autor_Pozycja" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Film_Pozycja" Association="Self.FK_Film_Pozycja">
+            <End Role="Pozycja" EntitySet="Pozycja" />
+            <End Role="Film" EntitySet="Film" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Ksiazka_Pozycja" Association="Self.FK_Ksiazka_Pozycja">
+            <End Role="Pozycja" EntitySet="Pozycja" />
+            <End Role="Ksiazka" EntitySet="Ksiazka" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Muzyka_Pozycja" Association="Self.FK_Muzyka_Pozycja">
+            <End Role="Pozycja" EntitySet="Pozycja" />
+            <End Role="Muzyka" EntitySet="Muzyka" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Pozycja_Notatka" Association="Self.FK_Pozycja_Notatka">
+            <End Role="Notatka" EntitySet="Notatka" />
+            <End Role="Pozycja" EntitySet="Pozycja" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Pozycja_Ocena" Association="Self.FK_Pozycja_Ocena">
+            <End Role="Ocena" EntitySet="Ocena" />
+            <End Role="Pozycja" EntitySet="Pozycja" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Poz_App_Mobilna_Typ" Association="Self.FK_Poz_App_Mobilna_Typ">
+            <End Role="Typ" EntitySet="Typ" />
+            <End Role="Poz_App_Mobilna" EntitySet="Poz_App_Mobilna" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Poz_App_Mobilna_Uzytkownik" Association="Self.FK_Poz_App_Mobilna_Uzytkownik">
+            <End Role="Uzytkownik" EntitySet="Uzytkownik" />
+            <End Role="Poz_App_Mobilna" EntitySet="Poz_App_Mobilna" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Pozycja_Repozytorium" Association="Self.FK_Pozycja_Repozytorium">
+            <End Role="Repozytorium" EntitySet="Repozytorium" />
+            <End Role="Pozycja" EntitySet="Pozycja" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Pozycja_Typ" Association="Self.FK_Pozycja_Typ">
+            <End Role="Typ" EntitySet="Typ" />
+            <End Role="Pozycja" EntitySet="Pozycja" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Pozycja_Uzytkownik" Association="Self.FK_Pozycja_Uzytkownik">
+            <End Role="Uzytkownik" EntitySet="Uzytkownik" />
+            <End Role="Pozycja" EntitySet="Pozycja" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Pozycja_Wydawca" Association="Self.FK_Pozycja_Wydawca">
+            <End Role="Wydawca" EntitySet="Wydawca" />
+            <End Role="Pozycja" EntitySet="Pozycja" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Prosby_Wypozyczen_Pozycja" Association="Self.FK_Prosby_Wypozyczen_Pozycja">
+            <End Role="Pozycja" EntitySet="Pozycja" />
+            <End Role="Prosby_Wypozyczen" EntitySet="Prosby_Wypozyczen" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Wypozyczenie_Pozycja" Association="Self.FK_Wypozyczenie_Pozycja">
+            <End Role="Pozycja" EntitySet="Pozycja" />
+            <End Role="Wypozyczenie" EntitySet="Wypozyczenie" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Prosby_Wypozyczen_Uzytkownik" Association="Self.FK_Prosby_Wypozyczen_Uzytkownik">
+            <End Role="Uzytkownik" EntitySet="Uzytkownik" />
+            <End Role="Prosby_Wypozyczen" EntitySet="Prosby_Wypozyczen" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Repozytorium_Uzytkownik" Association="Self.FK_Repozytorium_Uzytkownik">
+            <End Role="Uzytkownik" EntitySet="Uzytkownik" />
+            <End Role="Repozytorium" EntitySet="Repozytorium" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Uzytkownik_Potwierdzenie_Uzytkownik" Association="Self.FK_Uzytkownik_Potwierdzenie_Uzytkownik">
+            <End Role="Uzytkownik" EntitySet="Uzytkownik" />
+            <End Role="Uzytkownik_Potwierdzenie" EntitySet="Uzytkownik_Potwierdzenie" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Wypozyczenie_Uzytkownik" Association="Self.FK_Wypozyczenie_Uzytkownik">
+            <End Role="Uzytkownik" EntitySet="Uzytkownik" />
+            <End Role="Wypozyczenie" EntitySet="Wypozyczenie" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="ShelfItModelStoreContainer" CdmEntityContainer="ShelfItBase">
+          <EntitySetMapping Name="Autor">
+            <EntityTypeMapping TypeName="ShelfItModel.Autor">
+              <MappingFragment StoreEntitySet="Autor">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="imie" ColumnName="imie" />
+                <ScalarProperty Name="nazwisko" ColumnName="nazwisko" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Autor_Pozycja">
+            <EntityTypeMapping TypeName="ShelfItModel.Autor_Pozycja">
+              <MappingFragment StoreEntitySet="Autor_Pozycja">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="pozycja_id" ColumnName="pozycja_id" />
+                <ScalarProperty Name="autor_id" ColumnName="autor_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Film">
+            <EntityTypeMapping TypeName="ShelfItModel.Film">
+              <MappingFragment StoreEntitySet="Film">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="dlugoscTrwania" ColumnName="dlugoscTrwania" />
+                <ScalarProperty Name="pozycja_id" ColumnName="pozycja_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Ksiazka">
+            <EntityTypeMapping TypeName="ShelfItModel.Ksiazka">
+              <MappingFragment StoreEntitySet="Ksiazka">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="iloscStron" ColumnName="iloscStron" />
+                <ScalarProperty Name="okladka" ColumnName="okladka" />
+                <ScalarProperty Name="pozycja_id" ColumnName="pozycja_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Muzyka">
+            <EntityTypeMapping TypeName="ShelfItModel.Muzyka">
+              <MappingFragment StoreEntitySet="Muzyka">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="iloscSciezek" ColumnName="iloscSciezek" />
+                <ScalarProperty Name="iloscPlyt" ColumnName="iloscPlyt" />
+                <ScalarProperty Name="pozycja_id" ColumnName="pozycja_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Notatka">
+            <EntityTypeMapping TypeName="ShelfItModel.Notatka">
+              <MappingFragment StoreEntitySet="Notatka">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="tresc" ColumnName="tresc" />
+                <ScalarProperty Name="data" ColumnName="data" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Ocena">
+            <EntityTypeMapping TypeName="ShelfItModel.Ocena">
+              <MappingFragment StoreEntitySet="Ocena">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="ocena1" ColumnName="ocena" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Poz_App_Mobilna">
+            <EntityTypeMapping TypeName="ShelfItModel.Poz_App_Mobilna">
+              <MappingFragment StoreEntitySet="Poz_App_Mobilna">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="tytul" ColumnName="tytul" />
+                <ScalarProperty Name="uzytkownik_id" ColumnName="uzytkownik_id" />
+                <ScalarProperty Name="typ_id" ColumnName="typ_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Pozycja">
+            <EntityTypeMapping TypeName="ShelfItModel.Pozycja">
+              <MappingFragment StoreEntitySet="Pozycja">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="repozytorium_id" ColumnName="repozytorium_id" />
+                <ScalarProperty Name="tytul" ColumnName="tytul" />
+                <ScalarProperty Name="rokWydania" ColumnName="rokWydania" />
+                <ScalarProperty Name="udostepnioneDla" ColumnName="udostepnioneDla" />
+                <ScalarProperty Name="typ" ColumnName="typ" />
+                <ScalarProperty Name="notatka" ColumnName="notatka" />
+                <ScalarProperty Name="ocena" ColumnName="ocena" />
+                <ScalarProperty Name="wydawca" ColumnName="wydawca" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Prosby_Wypozyczen">
+            <EntityTypeMapping TypeName="ShelfItModel.Prosby_Wypozyczen">
+              <MappingFragment StoreEntitySet="Prosby_Wypozyczen">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="uzytkownik_id" ColumnName="uzytkownik_id" />
+                <ScalarProperty Name="data" ColumnName="data" />
+                <ScalarProperty Name="pozycja_id" ColumnName="pozycja_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Repozytorium">
+            <EntityTypeMapping TypeName="ShelfItModel.Repozytorium">
+              <MappingFragment StoreEntitySet="Repozytorium">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="uzytkownik_id" ColumnName="uzytkownik_id" />
+                <ScalarProperty Name="nazwa" ColumnName="nazwa" />
+                <ScalarProperty Name="domyslny_id" ColumnName="domyslny_id" />
+                <ScalarProperty Name="numer_repoz" ColumnName="numer_repoz" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Typ">
+            <EntityTypeMapping TypeName="ShelfItModel.Typ">
+              <MappingFragment StoreEntitySet="Typ">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="nazwa" ColumnName="nazwa" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Uzytkownik">
+            <EntityTypeMapping TypeName="ShelfItModel.Uzytkownik">
+              <MappingFragment StoreEntitySet="Uzytkownik">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="login" ColumnName="login" />
+                <ScalarProperty Name="password" ColumnName="password" />
+                <ScalarProperty Name="sessionID" ColumnName="sessionID" />
+                <ScalarProperty Name="IsConfirmed" ColumnName="IsConfirmed" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Uzytkownik_Potwierdzenie">
+            <EntityTypeMapping TypeName="ShelfItModel.Uzytkownik_Potwierdzenie">
+              <MappingFragment StoreEntitySet="Uzytkownik_Potwierdzenie">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="uzytkownik_id" ColumnName="uzytkownik_id" />
+                <ScalarProperty Name="generatedLinkHash" ColumnName="generatedLinkHash" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Wydawca">
+            <EntityTypeMapping TypeName="ShelfItModel.Wydawca">
+              <MappingFragment StoreEntitySet="Wydawca">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="nazwa" ColumnName="nazwa" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Wypozyczenie">
+            <EntityTypeMapping TypeName="ShelfItModel.Wypozyczenie">
+              <MappingFragment StoreEntitySet="Wypozyczenie">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="uzytkownik_id" ColumnName="uzytkownik_id" />
+                <ScalarProperty Name="pozycja_id" ColumnName="pozycja_id" />
+                <ScalarProperty Name="wypozyczoneDnia" ColumnName="wypozyczoneDnia" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
