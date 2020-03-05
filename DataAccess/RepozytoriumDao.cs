@@ -67,5 +67,13 @@ namespace DataAccess
             database.SaveChanges();
             return true;
         }
+        public bool DeleteUserRepo(int repoID, int userID)
+        {
+            var repoToDelete = database.Repozytorium.Single(x => x.id == repoID && x.uzytkownik_id == userID);
+            if (repoToDelete == null) return false;
+            database.Repozytorium.Remove(repoToDelete);
+            database.SaveChanges();
+            return true;
+        }
     }
 }
