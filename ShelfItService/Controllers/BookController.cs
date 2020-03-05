@@ -19,7 +19,7 @@ namespace ShelfItService.Controllers
             userDao = new UserDao();
         }
         [HttpGet()]
-        public IActionResult GetAllUsersBook(string sessionID, int? userID)
+        public IActionResult GetAllUserBooks(string sessionID, int? userID)
         {
             if (sessionID == null || userID == null) return BadRequest("Values cannot be null!");
             var user = userDao.GetUserByUserID(userID, sessionID);

@@ -18,6 +18,7 @@ namespace DataAccess
         public Repozytorium()
         {
             this.Pozycja = new HashSet<Pozycja>();
+            this.Repozytorium_Udostepnienie = new HashSet<Repozytorium_Udostepnienie>();
         }
     
         public int id { get; set; }
@@ -28,6 +29,8 @@ namespace DataAccess
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Pozycja> Pozycja { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Repozytorium_Udostepnienie> Repozytorium_Udostepnienie { get; set; }
         public virtual Uzytkownik Uzytkownik { get; set; }
     }
 }

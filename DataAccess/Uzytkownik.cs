@@ -21,6 +21,8 @@ namespace DataAccess
             this.Pozycja = new HashSet<Pozycja>();
             this.Prosby_Wypozyczen = new HashSet<Prosby_Wypozyczen>();
             this.Repozytorium = new HashSet<Repozytorium>();
+            this.Repozytorium_Udostepnienie = new HashSet<Repozytorium_Udostepnienie>();
+            this.Repozytorium_Udostepnienie1 = new HashSet<Repozytorium_Udostepnienie>();
             this.Uzytkownik_Potwierdzenie = new HashSet<Uzytkownik_Potwierdzenie>();
             this.Wypozyczenie = new HashSet<Wypozyczenie>();
         }
@@ -40,6 +42,10 @@ namespace DataAccess
         public virtual ICollection<Prosby_Wypozyczen> Prosby_Wypozyczen { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Repozytorium> Repozytorium { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Repozytorium_Udostepnienie> Repozytorium_Udostepnienie { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Repozytorium_Udostepnienie> Repozytorium_Udostepnienie1 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Uzytkownik_Potwierdzenie> Uzytkownik_Potwierdzenie { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

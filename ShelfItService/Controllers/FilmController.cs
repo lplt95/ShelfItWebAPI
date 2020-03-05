@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using DataRepositories;
+using DataAccess;
 using DataTransfer;
 
 namespace ShelfItService.Controllers
@@ -11,32 +11,21 @@ namespace ShelfItService.Controllers
     [Route("ShelfIt/Film")]
     public class FilmController : Controller
     {
-        /*List<FilmDto> listaFilmow;
-        FilmRepository repository;
+        FilmDao filmDao;
+        UserDao userDao;
         public FilmController()
         {
-            repository = new FilmRepository();
-            listaFilmow = FilmRepository.filmy;
+            filmDao = new FilmDao();
+            userDao = new UserDao();
         }
-        [HttpGet]
-        public IActionResult GetAllFilms(string sessionID, int? userID)
+        [HttpGet()]
+        public IActionResult GetAllUserFilms(string sessionID, int? userID)
         {
             if (sessionID == null || userID == null) return BadRequest("Values cannot be null!");
-            var user = UserRepository.userzy.Find(x => x.userID == userID);
-            var listToReturn = new List<FilmDto>();
-            if (user.sessionID == sessionID)
-            {
-                foreach (var repo in user.repozytoria)
-                {
-                    var list = listaFilmow.FindAll(x => x.repositoryID == repo.repozytoriumID);
-                    listToReturn.AddRange(list);
-                }
-                return Ok(listToReturn);
-            }
-            else
-            {
-                return BadRequest("SessionID is not valid for user");
-            }
+            var user = userDao.GetUserByUserID(userID, sessionID);
+            if (user == null) return BadRequest("Session ID is not valid for user!");
+            var listToReturn = filmDao.GetAllFilmsForUser(user);
+            return Ok(listToReturn);
         }
         [HttpGet("Film")]
         public IActionResult GetBook(int? id, int? userID)
@@ -79,6 +68,6 @@ namespace ShelfItService.Controllers
                 return Ok(listToReturn);
             }
             else return BadRequest("SessionID is not valid for user");
-        }*/
+        }
     }
 }

@@ -36,6 +36,7 @@ namespace DataAccess
         public virtual DbSet<Pozycja> Pozycja { get; set; }
         public virtual DbSet<Prosby_Wypozyczen> Prosby_Wypozyczen { get; set; }
         public virtual DbSet<Repozytorium> Repozytorium { get; set; }
+        public virtual DbSet<Repozytorium_Udostepnienie> Repozytorium_Udostepnienie { get; set; }
         public virtual DbSet<Typ> Typ { get; set; }
         public virtual DbSet<Uzytkownik> Uzytkownik { get; set; }
         public virtual DbSet<Uzytkownik_Potwierdzenie> Uzytkownik_Potwierdzenie { get; set; }

@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="ShelfItModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="ShelfItBase.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Autor">
           <Key>
             <PropertyRef Name="id" />
@@ -103,6 +103,15 @@
           <Property Name="nazwa" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="domyslny_id" Type="char" MaxLength="1" Nullable="false" />
           <Property Name="numer_repoz" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Repozytorium_Udostepnienie">
+          <Key>
+            <PropertyRef Name="udostepnienie_id" />
+          </Key>
+          <Property Name="udostepnienie_id" Type="int" Nullable="false" />
+          <Property Name="repozytorium_id" Type="int" Nullable="false" />
+          <Property Name="wlasciciel_id" Type="int" Nullable="false" />
+          <Property Name="uzytkownik_id" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Typ">
           <Key>
@@ -326,6 +335,42 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Repozytorium_Udostepnienie_Repozytorium">
+          <End Role="Repozytorium" Type="Self.Repozytorium" Multiplicity="1" />
+          <End Role="Repozytorium_Udostepnienie" Type="Self.Repozytorium_Udostepnienie" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Repozytorium">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Repozytorium_Udostepnienie">
+              <PropertyRef Name="repozytorium_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Repozytorium_Udostepnienie_Uzytkownik">
+          <End Role="Uzytkownik" Type="Self.Uzytkownik" Multiplicity="1" />
+          <End Role="Repozytorium_Udostepnienie" Type="Self.Repozytorium_Udostepnienie" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Uzytkownik">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Repozytorium_Udostepnienie">
+              <PropertyRef Name="wlasciciel_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Repozytorium_Udostepnienie_Uzytkownik1">
+          <End Role="Uzytkownik" Type="Self.Uzytkownik" Multiplicity="1" />
+          <End Role="Repozytorium_Udostepnienie" Type="Self.Repozytorium_Udostepnienie" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Uzytkownik">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Repozytorium_Udostepnienie">
+              <PropertyRef Name="uzytkownik_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Repozytorium_Uzytkownik">
           <End Role="Uzytkownik" Type="Self.Uzytkownik" Multiplicity="1" />
           <End Role="Repozytorium" Type="Self.Repozytorium" Multiplicity="*" />
@@ -374,7 +419,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="ShelfItModelStoreContainer">
+        <EntityContainer Name="ShelfItBaseStoreContainer">
           <EntitySet Name="Autor" EntityType="Self.Autor" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Autor_Pozycja" EntityType="Self.Autor_Pozycja" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Film" EntityType="Self.Film" Schema="dbo" store:Type="Tables" />
@@ -386,6 +431,7 @@
           <EntitySet Name="Pozycja" EntityType="Self.Pozycja" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Prosby_Wypozyczen" EntityType="Self.Prosby_Wypozyczen" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Repozytorium" EntityType="Self.Repozytorium" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Repozytorium_Udostepnienie" EntityType="Self.Repozytorium_Udostepnienie" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Typ" EntityType="Self.Typ" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Uzytkownik" EntityType="Self.Uzytkownik" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Uzytkownik_Potwierdzenie" EntityType="Self.Uzytkownik_Potwierdzenie" Schema="dbo" store:Type="Tables" />
@@ -451,6 +497,18 @@
             <End Role="Uzytkownik" EntitySet="Uzytkownik" />
             <End Role="Prosby_Wypozyczen" EntitySet="Prosby_Wypozyczen" />
           </AssociationSet>
+          <AssociationSet Name="FK_Repozytorium_Udostepnienie_Repozytorium" Association="Self.FK_Repozytorium_Udostepnienie_Repozytorium">
+            <End Role="Repozytorium" EntitySet="Repozytorium" />
+            <End Role="Repozytorium_Udostepnienie" EntitySet="Repozytorium_Udostepnienie" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Repozytorium_Udostepnienie_Uzytkownik" Association="Self.FK_Repozytorium_Udostepnienie_Uzytkownik">
+            <End Role="Uzytkownik" EntitySet="Uzytkownik" />
+            <End Role="Repozytorium_Udostepnienie" EntitySet="Repozytorium_Udostepnienie" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Repozytorium_Udostepnienie_Uzytkownik1" Association="Self.FK_Repozytorium_Udostepnienie_Uzytkownik1">
+            <End Role="Uzytkownik" EntitySet="Uzytkownik" />
+            <End Role="Repozytorium_Udostepnienie" EntitySet="Repozytorium_Udostepnienie" />
+          </AssociationSet>
           <AssociationSet Name="FK_Repozytorium_Uzytkownik" Association="Self.FK_Repozytorium_Uzytkownik">
             <End Role="Uzytkownik" EntitySet="Uzytkownik" />
             <End Role="Repozytorium" EntitySet="Repozytorium" />
@@ -472,7 +530,7 @@
     </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
-      <Schema Namespace="ShelfItModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+      <Schema Namespace="ShelfItBase" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityType Name="Autor">
           <Key>
             <PropertyRef Name="id" />
@@ -596,7 +654,20 @@
           <Property Name="domyslny_id" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
           <Property Name="numer_repoz" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Pozycja" Relationship="Self.FK_Pozycja_Repozytorium" FromRole="Repozytorium" ToRole="Pozycja" />
+          <NavigationProperty Name="Repozytorium_Udostepnienie" Relationship="Self.FK_Repozytorium_Udostepnienie_Repozytorium" FromRole="Repozytorium" ToRole="Repozytorium_Udostepnienie" />
           <NavigationProperty Name="Uzytkownik" Relationship="Self.FK_Repozytorium_Uzytkownik" FromRole="Repozytorium" ToRole="Uzytkownik" />
+        </EntityType>
+        <EntityType Name="Repozytorium_Udostepnienie">
+          <Key>
+            <PropertyRef Name="udostepnienie_id" />
+          </Key>
+          <Property Name="udostepnienie_id" Type="Int32" Nullable="false" />
+          <Property Name="repozytorium_id" Type="Int32" Nullable="false" />
+          <Property Name="wlasciciel_id" Type="Int32" Nullable="false" />
+          <Property Name="uzytkownik_id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Repozytorium" Relationship="Self.FK_Repozytorium_Udostepnienie_Repozytorium" FromRole="Repozytorium_Udostepnienie" ToRole="Repozytorium" />
+          <NavigationProperty Name="Uzytkownik" Relationship="Self.FK_Repozytorium_Udostepnienie_Uzytkownik" FromRole="Repozytorium_Udostepnienie" ToRole="Uzytkownik" />
+          <NavigationProperty Name="Uzytkownik1" Relationship="Self.FK_Repozytorium_Udostepnienie_Uzytkownik1" FromRole="Repozytorium_Udostepnienie" ToRole="Uzytkownik" />
         </EntityType>
         <EntityType Name="Typ">
           <Key>
@@ -621,6 +692,8 @@
           <NavigationProperty Name="Pozycja" Relationship="Self.FK_Pozycja_Uzytkownik" FromRole="Uzytkownik" ToRole="Pozycja" />
           <NavigationProperty Name="Prosby_Wypozyczen" Relationship="Self.FK_Prosby_Wypozyczen_Uzytkownik" FromRole="Uzytkownik" ToRole="Prosby_Wypozyczen" />
           <NavigationProperty Name="Repozytorium" Relationship="Self.FK_Repozytorium_Uzytkownik" FromRole="Uzytkownik" ToRole="Repozytorium" />
+          <NavigationProperty Name="Repozytorium_Udostepnienie" Relationship="Self.FK_Repozytorium_Udostepnienie_Uzytkownik" FromRole="Uzytkownik" ToRole="Repozytorium_Udostepnienie" />
+          <NavigationProperty Name="Repozytorium_Udostepnienie1" Relationship="Self.FK_Repozytorium_Udostepnienie_Uzytkownik1" FromRole="Uzytkownik" ToRole="Repozytorium_Udostepnienie" />
           <NavigationProperty Name="Uzytkownik_Potwierdzenie" Relationship="Self.FK_Uzytkownik_Potwierdzenie_Uzytkownik" FromRole="Uzytkownik" ToRole="Uzytkownik_Potwierdzenie" />
           <NavigationProperty Name="Wypozyczenie" Relationship="Self.FK_Wypozyczenie_Uzytkownik" FromRole="Uzytkownik" ToRole="Wypozyczenie" />
         </EntityType>
@@ -844,6 +917,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Repozytorium_Udostepnienie_Repozytorium">
+          <End Role="Repozytorium" Type="Self.Repozytorium" Multiplicity="1" />
+          <End Role="Repozytorium_Udostepnienie" Type="Self.Repozytorium_Udostepnienie" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Repozytorium">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Repozytorium_Udostepnienie">
+              <PropertyRef Name="repozytorium_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Repozytorium_Uzytkownik">
           <End Role="Uzytkownik" Type="Self.Uzytkownik" Multiplicity="1" />
           <End Role="Repozytorium" Type="Self.Repozytorium" Multiplicity="*" />
@@ -852,6 +937,30 @@
               <PropertyRef Name="id" />
             </Principal>
             <Dependent Role="Repozytorium">
+              <PropertyRef Name="uzytkownik_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Repozytorium_Udostepnienie_Uzytkownik">
+          <End Role="Uzytkownik" Type="Self.Uzytkownik" Multiplicity="1" />
+          <End Role="Repozytorium_Udostepnienie" Type="Self.Repozytorium_Udostepnienie" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Uzytkownik">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Repozytorium_Udostepnienie">
+              <PropertyRef Name="wlasciciel_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Repozytorium_Udostepnienie_Uzytkownik1">
+          <End Role="Uzytkownik" Type="Self.Uzytkownik" Multiplicity="1" />
+          <End Role="Repozytorium_Udostepnienie" Type="Self.Repozytorium_Udostepnienie" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Uzytkownik">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Repozytorium_Udostepnienie">
               <PropertyRef Name="uzytkownik_id" />
             </Dependent>
           </ReferentialConstraint>
@@ -880,7 +989,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="ShelfItBase" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="ShelfItEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Autor" EntityType="Self.Autor" />
           <EntitySet Name="Autor_Pozycja" EntityType="Self.Autor_Pozycja" />
           <EntitySet Name="Film" EntityType="Self.Film" />
@@ -892,6 +1001,7 @@
           <EntitySet Name="Pozycja" EntityType="Self.Pozycja" />
           <EntitySet Name="Prosby_Wypozyczen" EntityType="Self.Prosby_Wypozyczen" />
           <EntitySet Name="Repozytorium" EntityType="Self.Repozytorium" />
+          <EntitySet Name="Repozytorium_Udostepnienie" EntityType="Self.Repozytorium_Udostepnienie" />
           <EntitySet Name="Typ" EntityType="Self.Typ" />
           <EntitySet Name="Uzytkownik" EntityType="Self.Uzytkownik" />
           <EntitySet Name="Uzytkownik_Potwierdzenie" EntityType="Self.Uzytkownik_Potwierdzenie" />
@@ -961,9 +1071,21 @@
             <End Role="Uzytkownik" EntitySet="Uzytkownik" />
             <End Role="Prosby_Wypozyczen" EntitySet="Prosby_Wypozyczen" />
           </AssociationSet>
+          <AssociationSet Name="FK_Repozytorium_Udostepnienie_Repozytorium" Association="Self.FK_Repozytorium_Udostepnienie_Repozytorium">
+            <End Role="Repozytorium" EntitySet="Repozytorium" />
+            <End Role="Repozytorium_Udostepnienie" EntitySet="Repozytorium_Udostepnienie" />
+          </AssociationSet>
           <AssociationSet Name="FK_Repozytorium_Uzytkownik" Association="Self.FK_Repozytorium_Uzytkownik">
             <End Role="Uzytkownik" EntitySet="Uzytkownik" />
             <End Role="Repozytorium" EntitySet="Repozytorium" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Repozytorium_Udostepnienie_Uzytkownik" Association="Self.FK_Repozytorium_Udostepnienie_Uzytkownik">
+            <End Role="Uzytkownik" EntitySet="Uzytkownik" />
+            <End Role="Repozytorium_Udostepnienie" EntitySet="Repozytorium_Udostepnienie" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Repozytorium_Udostepnienie_Uzytkownik1" Association="Self.FK_Repozytorium_Udostepnienie_Uzytkownik1">
+            <End Role="Uzytkownik" EntitySet="Uzytkownik" />
+            <End Role="Repozytorium_Udostepnienie" EntitySet="Repozytorium_Udostepnienie" />
           </AssociationSet>
           <AssociationSet Name="FK_Uzytkownik_Potwierdzenie_Uzytkownik" Association="Self.FK_Uzytkownik_Potwierdzenie_Uzytkownik">
             <End Role="Uzytkownik" EntitySet="Uzytkownik" />
@@ -979,9 +1101,9 @@
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="ShelfItModelStoreContainer" CdmEntityContainer="ShelfItBase">
+        <EntityContainerMapping StorageEntityContainer="ShelfItBaseStoreContainer" CdmEntityContainer="ShelfItEntities">
           <EntitySetMapping Name="Autor">
-            <EntityTypeMapping TypeName="ShelfItModel.Autor">
+            <EntityTypeMapping TypeName="ShelfItBase.Autor">
               <MappingFragment StoreEntitySet="Autor">
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="imie" ColumnName="imie" />
@@ -990,7 +1112,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Autor_Pozycja">
-            <EntityTypeMapping TypeName="ShelfItModel.Autor_Pozycja">
+            <EntityTypeMapping TypeName="ShelfItBase.Autor_Pozycja">
               <MappingFragment StoreEntitySet="Autor_Pozycja">
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="pozycja_id" ColumnName="pozycja_id" />
@@ -999,7 +1121,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Film">
-            <EntityTypeMapping TypeName="ShelfItModel.Film">
+            <EntityTypeMapping TypeName="ShelfItBase.Film">
               <MappingFragment StoreEntitySet="Film">
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="dlugoscTrwania" ColumnName="dlugoscTrwania" />
@@ -1008,7 +1130,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Ksiazka">
-            <EntityTypeMapping TypeName="ShelfItModel.Ksiazka">
+            <EntityTypeMapping TypeName="ShelfItBase.Ksiazka">
               <MappingFragment StoreEntitySet="Ksiazka">
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="iloscStron" ColumnName="iloscStron" />
@@ -1018,7 +1140,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Muzyka">
-            <EntityTypeMapping TypeName="ShelfItModel.Muzyka">
+            <EntityTypeMapping TypeName="ShelfItBase.Muzyka">
               <MappingFragment StoreEntitySet="Muzyka">
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="iloscSciezek" ColumnName="iloscSciezek" />
@@ -1028,7 +1150,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Notatka">
-            <EntityTypeMapping TypeName="ShelfItModel.Notatka">
+            <EntityTypeMapping TypeName="ShelfItBase.Notatka">
               <MappingFragment StoreEntitySet="Notatka">
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="tresc" ColumnName="tresc" />
@@ -1037,7 +1159,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Ocena">
-            <EntityTypeMapping TypeName="ShelfItModel.Ocena">
+            <EntityTypeMapping TypeName="ShelfItBase.Ocena">
               <MappingFragment StoreEntitySet="Ocena">
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="ocena1" ColumnName="ocena" />
@@ -1045,7 +1167,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Poz_App_Mobilna">
-            <EntityTypeMapping TypeName="ShelfItModel.Poz_App_Mobilna">
+            <EntityTypeMapping TypeName="ShelfItBase.Poz_App_Mobilna">
               <MappingFragment StoreEntitySet="Poz_App_Mobilna">
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="tytul" ColumnName="tytul" />
@@ -1055,7 +1177,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Pozycja">
-            <EntityTypeMapping TypeName="ShelfItModel.Pozycja">
+            <EntityTypeMapping TypeName="ShelfItBase.Pozycja">
               <MappingFragment StoreEntitySet="Pozycja">
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="repozytorium_id" ColumnName="repozytorium_id" />
@@ -1070,7 +1192,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Prosby_Wypozyczen">
-            <EntityTypeMapping TypeName="ShelfItModel.Prosby_Wypozyczen">
+            <EntityTypeMapping TypeName="ShelfItBase.Prosby_Wypozyczen">
               <MappingFragment StoreEntitySet="Prosby_Wypozyczen">
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="uzytkownik_id" ColumnName="uzytkownik_id" />
@@ -1080,7 +1202,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Repozytorium">
-            <EntityTypeMapping TypeName="ShelfItModel.Repozytorium">
+            <EntityTypeMapping TypeName="ShelfItBase.Repozytorium">
               <MappingFragment StoreEntitySet="Repozytorium">
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="uzytkownik_id" ColumnName="uzytkownik_id" />
@@ -1090,8 +1212,18 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="Repozytorium_Udostepnienie">
+            <EntityTypeMapping TypeName="ShelfItBase.Repozytorium_Udostepnienie">
+              <MappingFragment StoreEntitySet="Repozytorium_Udostepnienie">
+                <ScalarProperty Name="udostepnienie_id" ColumnName="udostepnienie_id" />
+                <ScalarProperty Name="repozytorium_id" ColumnName="repozytorium_id" />
+                <ScalarProperty Name="wlasciciel_id" ColumnName="wlasciciel_id" />
+                <ScalarProperty Name="uzytkownik_id" ColumnName="uzytkownik_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Typ">
-            <EntityTypeMapping TypeName="ShelfItModel.Typ">
+            <EntityTypeMapping TypeName="ShelfItBase.Typ">
               <MappingFragment StoreEntitySet="Typ">
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="nazwa" ColumnName="nazwa" />
@@ -1099,7 +1231,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Uzytkownik">
-            <EntityTypeMapping TypeName="ShelfItModel.Uzytkownik">
+            <EntityTypeMapping TypeName="ShelfItBase.Uzytkownik">
               <MappingFragment StoreEntitySet="Uzytkownik">
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="email" ColumnName="email" />
@@ -1111,7 +1243,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Uzytkownik_Potwierdzenie">
-            <EntityTypeMapping TypeName="ShelfItModel.Uzytkownik_Potwierdzenie">
+            <EntityTypeMapping TypeName="ShelfItBase.Uzytkownik_Potwierdzenie">
               <MappingFragment StoreEntitySet="Uzytkownik_Potwierdzenie">
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="uzytkownik_id" ColumnName="uzytkownik_id" />
@@ -1120,7 +1252,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Wydawca">
-            <EntityTypeMapping TypeName="ShelfItModel.Wydawca">
+            <EntityTypeMapping TypeName="ShelfItBase.Wydawca">
               <MappingFragment StoreEntitySet="Wydawca">
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="nazwa" ColumnName="nazwa" />
@@ -1128,7 +1260,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Wypozyczenie">
-            <EntityTypeMapping TypeName="ShelfItModel.Wypozyczenie">
+            <EntityTypeMapping TypeName="ShelfItBase.Wypozyczenie">
               <MappingFragment StoreEntitySet="Wypozyczenie">
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="uzytkownik_id" ColumnName="uzytkownik_id" />
