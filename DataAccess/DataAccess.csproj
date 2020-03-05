@@ -105,6 +105,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Model1.edmx</DependentUpon>
     </Compile>
+    <Compile Include="MusicDao.cs" />
     <Compile Include="Muzyka.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>

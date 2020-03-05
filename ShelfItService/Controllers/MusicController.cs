@@ -5,12 +5,54 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using DataRepositories;
 using DataTransfer;
+using DataAccess;
 
 namespace ShelfItService.Controllers
 {
     [Route("ShelfIt/Music")]
     public class MusicController : Controller
     {
+        MusicDao musicDao;
+        UserDao userDao;
+
+        public MusicController()
+        {
+            musicDao = new MusicDao();
+            userDao = new UserDao();
+        }
+
+        [HttpGet()]
+        public IActionResult GetAllUserMusic(string sessionID, int? userID)
+        {
+            if (sessionID == null || userID == null) return BadRequest("Values cannot be null!");
+            var user = userDao.GetUserByUserID(userID, sessionID);
+            if (user == null) return BadRequest("SessionID is not valid for user!");
+            var listToReturn = musicDao.GetAllMusicForUser(user);
+            return Ok(listToReturn);
+        }
+
+        [HttpGet("Music")]
+        public IActionResult GetMusic(int? id, int? userID, string sessionID)
+        {
+            if (id == null || userID == null || sessionID == null) return BadRequest("Values cannot be null");
+            var user = userDao.GetUserByUserID(userID, sessionID);
+            if (user == null) return BadRequest("SessionID is not valid for user!");
+            var musicToReturn = musicDao.GetMusic(user, id);
+            if (musicToReturn == null) return BadRequest("Music not found or you cannot see this record.");
+            return Ok(musicToReturn);
+        }
+
+        [HttpPost("PostMusic")]
+        public IActionResult AddMusicToRepository(string sessionID, int? userID, [FromBody] MuzykaDto muzyka)
+        {
+            if (sessionID == null || userID == null) return BadRequest("Values cannot be null.");
+            var user = userDao.GetUserByUserID(userID, sessionID);
+            if (user == null) return BadRequest("SessionID is not valid for user.");
+            var musicToReturn = musicDao.AddMusicToDatabase(muzyka, user);
+            return Ok(musicToReturn);
+
+        }
+
         /*List<MuzykaDto> listaMuzyki;
         MusicRepository repository;
         public MusicController()
