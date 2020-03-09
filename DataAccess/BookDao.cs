@@ -64,6 +64,16 @@ namespace DataAccess
             autorDao.ManageAutorsToPosition(ksiazka.autorzy, position.id);
             return GetAllBooksForUser(user);
         }
+        public List<KsiazkaDto> DeleteBookFromDatabase(UserDto user, int? idKsiazka)
+        {
+            Ksiazka book = database.Ksiazka.Single(x => x.id == idKsiazka);
+            if(book != null)
+            {
+                database.Ksiazka.Remove(book);
+                database.SaveChanges();
+            }
+            return GetAllBooksForUser(user);
+        }
         #region PrivateHelpers
         private List<KsiazkaDto> ConvertToDto(List<Ksiazka> ksiazkaList)
         {
