@@ -118,7 +118,33 @@ namespace DataAccess
                 message = "Password was changed";
                 return true;
             }
-            message = "Ops! Something went wrong. Password didn't changed";
+            message = "Ops! Something went wrong. Password didn't changed\n" + result;
+            return false;
+        }
+        public bool InviteNewUser(string emailToRegister, out string message)
+        {
+            var user = database.Uzytkownik.Single(x => x.email == emailToRegister);
+            if(user != null)
+            {
+                message = "Email already exist in database!";
+                return false;
+            }
+            string session = GenerateSessionID(emailToRegister);
+            var mailAddress = new MailAddress(emailToRegister);
+            var result = provider.SendInviteEmail(mailAddress, session);
+            if(result == "Success!")
+            {
+                var confirm = new Uzytkownik_Potwierdzenie()
+                {
+                    generatedLinkHash = session,
+                    id = database.Uzytkownik_Potwierdzenie.Max(x => x.id) + 1
+                };
+                database.Uzytkownik_Potwierdzenie.Add(confirm);
+                database.SaveChanges();
+                message = "Success!";
+                return true;
+            }
+            message = "Ops! Something went wrong.\n" + result;
             return false;
         }
         /// <summary>

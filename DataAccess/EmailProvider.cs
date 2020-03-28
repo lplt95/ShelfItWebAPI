@@ -38,6 +38,12 @@ namespace DataAccess
             EmailMessagesDto messageContent = EmailMessagesRepository.changePass;
             return SendMessage(userAddress, messageContent, createdLink);
         }
+        public string SendInviteEmail(MailAddress userAddress, string sessionID)
+        {
+            string createdLink = ApiElementsEnum.inviteNewUserLink + sessionID;
+            EmailMessagesDto messageContent = EmailMessagesRepository.inviteUser;
+            return SendMessage(userAddress, messageContent, createdLink);
+        }
         private string SendMessage(MailAddress userAddress, EmailMessagesDto messageContent, string createdLink)
         {
             MailMessage message = new MailMessage(serviceAddress, userAddress)
@@ -59,7 +65,7 @@ namespace DataAccess
             }
             catch (Exception ex)
             {
-                return "Fail \n" + ex.Message;
+                return "Fail to send message!\n" + ex.Message;
             }
         }
     }

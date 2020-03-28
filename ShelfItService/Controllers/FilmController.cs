@@ -9,7 +9,7 @@ using DataTransfer;
 namespace ShelfItService.Controllers
 {
     [Route("ShelfIt/Film")]
-    public class FilmController : Controller
+    public class FilmController : DefaultController
     {
         FilmDao filmDao;
         UserDao userDao;
@@ -21,53 +21,39 @@ namespace ShelfItService.Controllers
         [HttpGet()]
         public IActionResult GetAllUserFilms(string sessionID, int? userID)
         {
-            if (sessionID == null || userID == null) return BadRequest("Values cannot be null!");
+            if (sessionID == null || userID == null) return NullValues();
             var user = userDao.GetUserByUserID(userID, sessionID);
-            if (user == null) return BadRequest("Session ID is not valid for user!");
+            if (user == null) return InvalidSessionID();
             var listToReturn = filmDao.GetAllFilmsForUser(user);
             return Ok(listToReturn);
         }
         [HttpGet("Film")]
-        public IActionResult GetBook(int? id, int? userID)
+        public IActionResult GetFilm(int? id, int? userID, string sessionID)
         {
-            if (id == null || userID == null) return BadRequest("Values cannot be null!");
-            var userRepo = UserRepository.userzy.Find(x => x.userID == userID).repozytoria;
-            var filmToReturn = listaFilmow.FirstOrDefault(f => f.idFilm == id);
-            if (filmToReturn == null)
-            {
-                return NotFound();
-            }
-            if (!repository.VerifyFilm(filmToReturn, userRepo))
-            {
-                return BadRequest("You don't have permission to access this resource");
-            }
-            return Ok(filmToReturn);
+            if (id == null || userID == null || sessionID == null) return NullValues();
+            var user = VerifyUserSessionID(sessionID, userID);
+            if (user == null) return InvalidSessionID();
+            var movieToReturn = filmDao.GetMovie(user, id);
+            if (movieToReturn == null) return BadRequest("Movie not found or you cannot see this record.");
+            return Ok(movieToReturn);
         }
         [HttpPost("PostFilm")]
-        public IActionResult AddBookToRepository(string sessionID, int? userID, [FromBody] FilmDto film)
+        public IActionResult AddFilmToRepository(string sessionID, int? userID, [FromBody] FilmDto film)
         {
-            if (sessionID == null || userID == null) return BadRequest("Values cannot be null!");
-            var listToReturn = new List<FilmDto>();
-            var user = UserRepository.userzy.Find(x => x.userID == userID);
-            if (user.sessionID == sessionID)
-            {
-                if (film == null || film.tytul == null)
-                {
-                    return BadRequest("Values cannot be null!");
-                }
-                film.idPozycja = Repository.maxPosID++;
-                film.idFilm = listaFilmow.Max(x => x.idFilm);
-                film.repositoryID = user.repozytoria.Find(x => x.dfltInd == "Y").repozytoriumID;
-                film.typ = TypConst.typKsiazka;
-                listaFilmow.Add(film);
-                foreach (var repo in user.repozytoria)
-                {
-                    var list = listaFilmow.FindAll(x => x.repositoryID == repo.repozytoriumID);
-                    listToReturn.AddRange(list);
-                }
-                return Ok(listToReturn);
-            }
-            else return BadRequest("SessionID is not valid for user");
+            if (sessionID == null || userID == null) return NullValues();
+            var user = VerifyUserSessionID(sessionID, userID);
+            if (user == null) return InvalidSessionID();
+            var movieToReturn = filmDao.AddFilmToDatabase(film, user);
+            return Ok(movieToReturn);
         }
+        /*[HttpDelete("DeleteFilm")]
+        public IActionResult DeleteBookFromRepository(string sessionID, int? userID, int? filmID)
+        {
+            if (sessionID == null || userID == null || filmID == null) return NullValues();
+            var user = VerifyUserSessionID(sessionID, userID);
+            if (user == null) return InvalidSessionID();
+            var bookToReturn = filmDao.(user, filmID);
+            return Ok(bookToReturn);
+        }*/
     }
 }

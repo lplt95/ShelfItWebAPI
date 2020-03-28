@@ -10,7 +10,7 @@ using DataTransfer;
 namespace ShelfItService.Controllers
 {
     [Route("ShelfIt/User")]
-    public class UserController : Controller
+    public class UserController : DefaultController
     {
         UserDao userDao;
         public UserController()
@@ -40,9 +40,18 @@ namespace ShelfItService.Controllers
         [HttpPost("ChangePassword")]
         public IActionResult ChangePassword([FromBody] ChangePass newPass)
         {
-            if (newPass == null) return BadRequest("Values cannot be null!");
+            if (newPass == null) return NullValues();
             string message = null;
             var result = userDao.ChangePassword(newPass, out message);
+            if (!result) return BadRequest(message);
+            return Ok(message);
+        }
+        [HttpGet("InviteUser")]
+        public IActionResult InviteNewUser(string email)
+        {
+            if (email == null) return NullValues();
+            string message = null;
+            var result = userDao.InviteNewUser(email, out message);
             if (!result) return BadRequest(message);
             return Ok(message);
         }
