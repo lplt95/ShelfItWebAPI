@@ -58,7 +58,8 @@ namespace ShelfItService.Controllers
         [HttpPost("RemoveChangedPass")]
         public IActionResult RemoveChangedPass(string id)
         {
-
+            string message = null;
+            var result = userDao.RemoveChangedPass(id, out message);
             return Ok();
         }
     }

@@ -147,6 +147,17 @@ namespace DataAccess
             message = "Ops! Something went wrong.\n" + result;
             return false;
         }
+        /*public bool RemoveChangedPass(string id, out string message)
+        {
+            var record = database.Uzytkownik_Potwierdzenie.Single(x => x.generatedLinkHash == id);
+            if(record == null)
+            {
+                message = "Provided id is not exist";
+                return false;
+            }
+            var user = record.Uzytkownik;
+
+        }*/
         /// <summary>
         /// ONLY FOR TEST!!!
         /// </summary>
