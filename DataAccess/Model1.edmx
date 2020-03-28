@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="ShelfItBase.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="ShelfItModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Autor">
           <Key>
             <PropertyRef Name="id" />
@@ -130,6 +130,9 @@
           <Property Name="password" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="sessionID" Type="varchar" MaxLength="50" />
           <Property Name="IsConfirmed" Type="bit" Nullable="false" />
+          <Property Name="passwordReset" Type="bit" />
+          <Property Name="deactivated" Type="bit" />
+          <Property Name="deactDate" Type="date" />
         </EntityType>
         <EntityType Name="Uzytkownik_Potwierdzenie">
           <Key>
@@ -154,6 +157,14 @@
           <Property Name="uzytkownik_id" Type="int" Nullable="false" />
           <Property Name="pozycja_id" Type="int" Nullable="false" />
           <Property Name="wypozyczoneDnia" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Zaproszenia">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="email" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="invitedBy" Type="int" Nullable="false" />
         </EntityType>
         <Association Name="FK_Autor_Pozycja_Autor">
           <End Role="Autor" Type="Self.Autor" Multiplicity="1" />
@@ -419,7 +430,19 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="ShelfItBaseStoreContainer">
+        <Association Name="FK_Zaproszenia_Uzytkownik">
+          <End Role="Uzytkownik" Type="Self.Uzytkownik" Multiplicity="1" />
+          <End Role="Zaproszenia" Type="Self.Zaproszenia" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Uzytkownik">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Zaproszenia">
+              <PropertyRef Name="invitedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ShelfItModelStoreContainer">
           <EntitySet Name="Autor" EntityType="Self.Autor" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Autor_Pozycja" EntityType="Self.Autor_Pozycja" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Film" EntityType="Self.Film" Schema="dbo" store:Type="Tables" />
@@ -437,6 +460,7 @@
           <EntitySet Name="Uzytkownik_Potwierdzenie" EntityType="Self.Uzytkownik_Potwierdzenie" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Wydawca" EntityType="Self.Wydawca" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Wypozyczenie" EntityType="Self.Wypozyczenie" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Zaproszenia" EntityType="Self.Zaproszenia" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_Autor_Pozycja_Autor" Association="Self.FK_Autor_Pozycja_Autor">
             <End Role="Autor" EntitySet="Autor" />
             <End Role="Autor_Pozycja" EntitySet="Autor_Pozycja" />
@@ -525,12 +549,16 @@
             <End Role="Uzytkownik" EntitySet="Uzytkownik" />
             <End Role="Wypozyczenie" EntitySet="Wypozyczenie" />
           </AssociationSet>
+          <AssociationSet Name="FK_Zaproszenia_Uzytkownik" Association="Self.FK_Zaproszenia_Uzytkownik">
+            <End Role="Uzytkownik" EntitySet="Uzytkownik" />
+            <End Role="Zaproszenia" EntitySet="Zaproszenia" />
+          </AssociationSet>
         </EntityContainer>
       </Schema>
     </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
-      <Schema Namespace="ShelfItBase" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+      <Schema Namespace="ShelfItModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityType Name="Autor">
           <Key>
             <PropertyRef Name="id" />
@@ -688,6 +716,9 @@
           <Property Name="password" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="sessionID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="IsConfirmed" Type="Boolean" Nullable="false" />
+          <Property Name="passwordReset" Type="Boolean" />
+          <Property Name="deactivated" Type="Boolean" />
+          <Property Name="deactDate" Type="DateTime" Precision="0" />
           <NavigationProperty Name="Poz_App_Mobilna" Relationship="Self.FK_Poz_App_Mobilna_Uzytkownik" FromRole="Uzytkownik" ToRole="Poz_App_Mobilna" />
           <NavigationProperty Name="Pozycja" Relationship="Self.FK_Pozycja_Uzytkownik" FromRole="Uzytkownik" ToRole="Pozycja" />
           <NavigationProperty Name="Prosby_Wypozyczen" Relationship="Self.FK_Prosby_Wypozyczen_Uzytkownik" FromRole="Uzytkownik" ToRole="Prosby_Wypozyczen" />
@@ -696,6 +727,7 @@
           <NavigationProperty Name="Repozytorium_Udostepnienie1" Relationship="Self.FK_Repozytorium_Udostepnienie_Uzytkownik1" FromRole="Uzytkownik" ToRole="Repozytorium_Udostepnienie" />
           <NavigationProperty Name="Uzytkownik_Potwierdzenie" Relationship="Self.FK_Uzytkownik_Potwierdzenie_Uzytkownik" FromRole="Uzytkownik" ToRole="Uzytkownik_Potwierdzenie" />
           <NavigationProperty Name="Wypozyczenie" Relationship="Self.FK_Wypozyczenie_Uzytkownik" FromRole="Uzytkownik" ToRole="Wypozyczenie" />
+          <NavigationProperty Name="Zaproszenia" Relationship="Self.FK_Zaproszenia_Uzytkownik" FromRole="Uzytkownik" ToRole="Zaproszenia" />
         </EntityType>
         <EntityType Name="Uzytkownik_Potwierdzenie">
           <Key>
@@ -724,6 +756,15 @@
           <Property Name="wypozyczoneDnia" Type="DateTime" Nullable="false" Precision="3" />
           <NavigationProperty Name="Pozycja" Relationship="Self.FK_Wypozyczenie_Pozycja" FromRole="Wypozyczenie" ToRole="Pozycja" />
           <NavigationProperty Name="Uzytkownik" Relationship="Self.FK_Wypozyczenie_Uzytkownik" FromRole="Wypozyczenie" ToRole="Uzytkownik" />
+        </EntityType>
+        <EntityType Name="Zaproszenia">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="invitedBy" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Uzytkownik" Relationship="Self.FK_Zaproszenia_Uzytkownik" FromRole="Zaproszenia" ToRole="Uzytkownik" />
         </EntityType>
         <Association Name="FK_Autor_Pozycja_Autor">
           <End Role="Autor" Type="Self.Autor" Multiplicity="1" />
@@ -989,6 +1030,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Zaproszenia_Uzytkownik">
+          <End Role="Uzytkownik" Type="Self.Uzytkownik" Multiplicity="1" />
+          <End Role="Zaproszenia" Type="Self.Zaproszenia" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Uzytkownik">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Zaproszenia">
+              <PropertyRef Name="invitedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="ShelfItEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Autor" EntityType="Self.Autor" />
           <EntitySet Name="Autor_Pozycja" EntityType="Self.Autor_Pozycja" />
@@ -1007,6 +1060,7 @@
           <EntitySet Name="Uzytkownik_Potwierdzenie" EntityType="Self.Uzytkownik_Potwierdzenie" />
           <EntitySet Name="Wydawca" EntityType="Self.Wydawca" />
           <EntitySet Name="Wypozyczenie" EntityType="Self.Wypozyczenie" />
+          <EntitySet Name="Zaproszenia" EntityType="Self.Zaproszenia" />
           <AssociationSet Name="FK_Autor_Pozycja_Autor" Association="Self.FK_Autor_Pozycja_Autor">
             <End Role="Autor" EntitySet="Autor" />
             <End Role="Autor_Pozycja" EntitySet="Autor_Pozycja" />
@@ -1095,15 +1149,19 @@
             <End Role="Uzytkownik" EntitySet="Uzytkownik" />
             <End Role="Wypozyczenie" EntitySet="Wypozyczenie" />
           </AssociationSet>
+          <AssociationSet Name="FK_Zaproszenia_Uzytkownik" Association="Self.FK_Zaproszenia_Uzytkownik">
+            <End Role="Uzytkownik" EntitySet="Uzytkownik" />
+            <End Role="Zaproszenia" EntitySet="Zaproszenia" />
+          </AssociationSet>
         </EntityContainer>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="ShelfItBaseStoreContainer" CdmEntityContainer="ShelfItEntities">
+        <EntityContainerMapping StorageEntityContainer="ShelfItModelStoreContainer" CdmEntityContainer="ShelfItEntities">
           <EntitySetMapping Name="Autor">
-            <EntityTypeMapping TypeName="ShelfItBase.Autor">
+            <EntityTypeMapping TypeName="ShelfItModel.Autor">
               <MappingFragment StoreEntitySet="Autor">
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="imie" ColumnName="imie" />
@@ -1112,7 +1170,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Autor_Pozycja">
-            <EntityTypeMapping TypeName="ShelfItBase.Autor_Pozycja">
+            <EntityTypeMapping TypeName="ShelfItModel.Autor_Pozycja">
               <MappingFragment StoreEntitySet="Autor_Pozycja">
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="pozycja_id" ColumnName="pozycja_id" />
@@ -1121,7 +1179,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Film">
-            <EntityTypeMapping TypeName="ShelfItBase.Film">
+            <EntityTypeMapping TypeName="ShelfItModel.Film">
               <MappingFragment StoreEntitySet="Film">
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="dlugoscTrwania" ColumnName="dlugoscTrwania" />
@@ -1130,7 +1188,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Ksiazka">
-            <EntityTypeMapping TypeName="ShelfItBase.Ksiazka">
+            <EntityTypeMapping TypeName="ShelfItModel.Ksiazka">
               <MappingFragment StoreEntitySet="Ksiazka">
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="iloscStron" ColumnName="iloscStron" />
@@ -1140,7 +1198,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Muzyka">
-            <EntityTypeMapping TypeName="ShelfItBase.Muzyka">
+            <EntityTypeMapping TypeName="ShelfItModel.Muzyka">
               <MappingFragment StoreEntitySet="Muzyka">
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="iloscSciezek" ColumnName="iloscSciezek" />
@@ -1150,7 +1208,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Notatka">
-            <EntityTypeMapping TypeName="ShelfItBase.Notatka">
+            <EntityTypeMapping TypeName="ShelfItModel.Notatka">
               <MappingFragment StoreEntitySet="Notatka">
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="tresc" ColumnName="tresc" />
@@ -1159,7 +1217,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Ocena">
-            <EntityTypeMapping TypeName="ShelfItBase.Ocena">
+            <EntityTypeMapping TypeName="ShelfItModel.Ocena">
               <MappingFragment StoreEntitySet="Ocena">
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="ocena1" ColumnName="ocena" />
@@ -1167,7 +1225,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Poz_App_Mobilna">
-            <EntityTypeMapping TypeName="ShelfItBase.Poz_App_Mobilna">
+            <EntityTypeMapping TypeName="ShelfItModel.Poz_App_Mobilna">
               <MappingFragment StoreEntitySet="Poz_App_Mobilna">
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="tytul" ColumnName="tytul" />
@@ -1177,7 +1235,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Pozycja">
-            <EntityTypeMapping TypeName="ShelfItBase.Pozycja">
+            <EntityTypeMapping TypeName="ShelfItModel.Pozycja">
               <MappingFragment StoreEntitySet="Pozycja">
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="repozytorium_id" ColumnName="repozytorium_id" />
@@ -1192,7 +1250,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Prosby_Wypozyczen">
-            <EntityTypeMapping TypeName="ShelfItBase.Prosby_Wypozyczen">
+            <EntityTypeMapping TypeName="ShelfItModel.Prosby_Wypozyczen">
               <MappingFragment StoreEntitySet="Prosby_Wypozyczen">
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="uzytkownik_id" ColumnName="uzytkownik_id" />
@@ -1202,7 +1260,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Repozytorium">
-            <EntityTypeMapping TypeName="ShelfItBase.Repozytorium">
+            <EntityTypeMapping TypeName="ShelfItModel.Repozytorium">
               <MappingFragment StoreEntitySet="Repozytorium">
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="uzytkownik_id" ColumnName="uzytkownik_id" />
@@ -1213,7 +1271,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Repozytorium_Udostepnienie">
-            <EntityTypeMapping TypeName="ShelfItBase.Repozytorium_Udostepnienie">
+            <EntityTypeMapping TypeName="ShelfItModel.Repozytorium_Udostepnienie">
               <MappingFragment StoreEntitySet="Repozytorium_Udostepnienie">
                 <ScalarProperty Name="udostepnienie_id" ColumnName="udostepnienie_id" />
                 <ScalarProperty Name="repozytorium_id" ColumnName="repozytorium_id" />
@@ -1223,7 +1281,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Typ">
-            <EntityTypeMapping TypeName="ShelfItBase.Typ">
+            <EntityTypeMapping TypeName="ShelfItModel.Typ">
               <MappingFragment StoreEntitySet="Typ">
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="nazwa" ColumnName="nazwa" />
@@ -1231,7 +1289,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Uzytkownik">
-            <EntityTypeMapping TypeName="ShelfItBase.Uzytkownik">
+            <EntityTypeMapping TypeName="ShelfItModel.Uzytkownik">
               <MappingFragment StoreEntitySet="Uzytkownik">
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="email" ColumnName="email" />
@@ -1239,11 +1297,14 @@
                 <ScalarProperty Name="password" ColumnName="password" />
                 <ScalarProperty Name="sessionID" ColumnName="sessionID" />
                 <ScalarProperty Name="IsConfirmed" ColumnName="IsConfirmed" />
+                <ScalarProperty Name="passwordReset" ColumnName="passwordReset" />
+                <ScalarProperty Name="deactivated" ColumnName="deactivated" />
+                <ScalarProperty Name="deactDate" ColumnName="deactDate" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Uzytkownik_Potwierdzenie">
-            <EntityTypeMapping TypeName="ShelfItBase.Uzytkownik_Potwierdzenie">
+            <EntityTypeMapping TypeName="ShelfItModel.Uzytkownik_Potwierdzenie">
               <MappingFragment StoreEntitySet="Uzytkownik_Potwierdzenie">
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="uzytkownik_id" ColumnName="uzytkownik_id" />
@@ -1252,7 +1313,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Wydawca">
-            <EntityTypeMapping TypeName="ShelfItBase.Wydawca">
+            <EntityTypeMapping TypeName="ShelfItModel.Wydawca">
               <MappingFragment StoreEntitySet="Wydawca">
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="nazwa" ColumnName="nazwa" />
@@ -1260,12 +1321,21 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Wypozyczenie">
-            <EntityTypeMapping TypeName="ShelfItBase.Wypozyczenie">
+            <EntityTypeMapping TypeName="ShelfItModel.Wypozyczenie">
               <MappingFragment StoreEntitySet="Wypozyczenie">
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="uzytkownik_id" ColumnName="uzytkownik_id" />
                 <ScalarProperty Name="pozycja_id" ColumnName="pozycja_id" />
                 <ScalarProperty Name="wypozyczoneDnia" ColumnName="wypozyczoneDnia" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Zaproszenia">
+            <EntityTypeMapping TypeName="ShelfItModel.Zaproszenia">
+              <MappingFragment StoreEntitySet="Zaproszenia">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="invitedBy" ColumnName="invitedBy" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

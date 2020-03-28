@@ -42,5 +42,6 @@ namespace DataAccess
         public virtual DbSet<Uzytkownik_Potwierdzenie> Uzytkownik_Potwierdzenie { get; set; }
         public virtual DbSet<Wydawca> Wydawca { get; set; }
         public virtual DbSet<Wypozyczenie> Wypozyczenie { get; set; }
+        public virtual DbSet<Zaproszenia> Zaproszenia { get; set; }
     }
 }
