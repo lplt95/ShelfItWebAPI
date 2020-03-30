@@ -27,11 +27,13 @@ namespace DataAccess
     
         public virtual DbSet<Autor> Autor { get; set; }
         public virtual DbSet<Autor_Pozycja> Autor_Pozycja { get; set; }
+        public virtual DbSet<EmailMessages> EmailMessages { get; set; }
         public virtual DbSet<Film> Film { get; set; }
         public virtual DbSet<Ksiazka> Ksiazka { get; set; }
         public virtual DbSet<Muzyka> Muzyka { get; set; }
         public virtual DbSet<Notatka> Notatka { get; set; }
         public virtual DbSet<Ocena> Ocena { get; set; }
+        public virtual DbSet<PhrasesToChange> PhrasesToChange { get; set; }
         public virtual DbSet<Poz_App_Mobilna> Poz_App_Mobilna { get; set; }
         public virtual DbSet<Pozycja> Pozycja { get; set; }
         public virtual DbSet<Prosby_Wypozyczen> Prosby_Wypozyczen { get; set; }

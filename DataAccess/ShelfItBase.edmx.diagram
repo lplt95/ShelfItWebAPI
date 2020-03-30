@@ -4,14 +4,16 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="8373ef5b45754d4ea10e88232ab629ce" Name="Diagram1">
+      <Diagram DiagramId="90bb2d759f6445dabdf9663ae10292e6" Name="Diagram1">
         <EntityTypeShape EntityType="ShelfItModel.Autor" Width="1.5" PointX="5.25" PointY="13.625" IsExpanded="true" />
         <EntityTypeShape EntityType="ShelfItModel.Autor_Pozycja" Width="1.5" PointX="7.5" PointY="15.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ShelfItModel.EmailMessages" Width="1.5" PointX="0.75" PointY="0.875" IsExpanded="true" />
         <EntityTypeShape EntityType="ShelfItModel.Film" Width="1.5" PointX="7.5" PointY="21.625" IsExpanded="true" />
         <EntityTypeShape EntityType="ShelfItModel.Ksiazka" Width="1.5" PointX="7.5" PointY="24.125" IsExpanded="true" />
         <EntityTypeShape EntityType="ShelfItModel.Muzyka" Width="1.5" PointX="7.5" PointY="26.875" IsExpanded="true" />
         <EntityTypeShape EntityType="ShelfItModel.Notatka" Width="1.5" PointX="3" PointY="18.25" IsExpanded="true" />
         <EntityTypeShape EntityType="ShelfItModel.Ocena" Width="1.5" PointX="3" PointY="11.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ShelfItModel.PhrasesToChange" Width="1.5" PointX="3" PointY="1" IsExpanded="true" />
         <EntityTypeShape EntityType="ShelfItModel.Poz_App_Mobilna" Width="1.5" PointX="3" PointY="14.625" IsExpanded="true" />
         <EntityTypeShape EntityType="ShelfItModel.Pozycja" Width="1.5" PointX="5.25" PointY="16.875" IsExpanded="true" />
         <EntityTypeShape EntityType="ShelfItModel.Prosby_Wypozyczen" Width="1.5" PointX="10.5" PointY="16.625" IsExpanded="true" />
@@ -25,6 +27,7 @@
         <EntityTypeShape EntityType="ShelfItModel.Zaproszenia" Width="1.5" PointX="3" PointY="28.75" IsExpanded="true" />
         <AssociationConnector Association="ShelfItModel.FK_Autor_Pozycja_Autor" ManuallyRouted="false" />
         <AssociationConnector Association="ShelfItModel.FK_Autor_Pozycja_Pozycja" ManuallyRouted="false" />
+        <AssociationConnector Association="ShelfItModel.FK_PhrasesToChange_EmailMessages" ManuallyRouted="false" />
         <AssociationConnector Association="ShelfItModel.FK_Film_Pozycja" ManuallyRouted="false" />
         <AssociationConnector Association="ShelfItModel.FK_Ksiazka_Pozycja" ManuallyRouted="false" />
         <AssociationConnector Association="ShelfItModel.FK_Muzyka_Pozycja" ManuallyRouted="false" />

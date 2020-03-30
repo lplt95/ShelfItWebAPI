@@ -75,83 +75,89 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Autor.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+      <DependentUpon>ShelfItBase.tt</DependentUpon>
     </Compile>
     <Compile Include="AutorDao.cs" />
     <Compile Include="Autor_Pozycja.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+      <DependentUpon>ShelfItBase.tt</DependentUpon>
     </Compile>
     <Compile Include="BookDao.cs" />
+    <Compile Include="EmailMessages.cs">
+      <DependentUpon>ShelfItBase.tt</DependentUpon>
+    </Compile>
     <Compile Include="EmailProvider.cs" />
     <Compile Include="Film.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+      <DependentUpon>ShelfItBase.tt</DependentUpon>
     </Compile>
     <Compile Include="FilmDao.cs" />
     <Compile Include="Ksiazka.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model1.Context.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Model1.Context.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model1.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model1.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Model1.edmx</DependentUpon>
+      <DependentUpon>ShelfItBase.tt</DependentUpon>
     </Compile>
     <Compile Include="MusicDao.cs" />
     <Compile Include="Muzyka.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+      <DependentUpon>ShelfItBase.tt</DependentUpon>
     </Compile>
     <Compile Include="Notatka.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+      <DependentUpon>ShelfItBase.tt</DependentUpon>
     </Compile>
     <Compile Include="NotatkaDao.cs" />
     <Compile Include="Ocena.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+      <DependentUpon>ShelfItBase.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PhrasesToChange.cs">
+      <DependentUpon>ShelfItBase.tt</DependentUpon>
     </Compile>
     <Compile Include="Pozycja.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+      <DependentUpon>ShelfItBase.tt</DependentUpon>
     </Compile>
     <Compile Include="Poz_App_Mobilna.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+      <DependentUpon>ShelfItBase.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Prosby_Wypozyczen.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+      <DependentUpon>ShelfItBase.tt</DependentUpon>
     </Compile>
     <Compile Include="Repozytorium.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+      <DependentUpon>ShelfItBase.tt</DependentUpon>
     </Compile>
     <Compile Include="RepozytoriumDao.cs" />
     <Compile Include="Repozytorium_Udostepnienie.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+      <DependentUpon>ShelfItBase.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ShelfItBase.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ShelfItBase.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ShelfItBase.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ShelfItBase.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ShelfItBase.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ShelfItBase.edmx</DependentUpon>
     </Compile>
     <Compile Include="Typ.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+      <DependentUpon>ShelfItBase.tt</DependentUpon>
     </Compile>
     <Compile Include="UserDao.cs" />
     <Compile Include="Uzytkownik.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+      <DependentUpon>ShelfItBase.tt</DependentUpon>
     </Compile>
     <Compile Include="Uzytkownik_Potwierdzenie.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+      <DependentUpon>ShelfItBase.tt</DependentUpon>
     </Compile>
     <Compile Include="Wydawca.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+      <DependentUpon>ShelfItBase.tt</DependentUpon>
     </Compile>
     <Compile Include="WydawcaDao.cs" />
     <Compile Include="Wypozyczenie.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+      <DependentUpon>ShelfItBase.tt</DependentUpon>
     </Compile>
     <Compile Include="Zaproszenia.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+      <DependentUpon>ShelfItBase.tt</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -166,28 +172,28 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.Config" />
-    <EntityDeploy Include="Model1.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>Model1.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-    <None Include="Model1.edmx.diagram">
-      <DependentUpon>Model1.edmx</DependentUpon>
-    </None>
     <None Include="packages.config" />
+    <EntityDeploy Include="ShelfItBase.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>ShelfItBase.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="ShelfItBase.edmx.diagram">
+      <DependentUpon>ShelfItBase.edmx</DependentUpon>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Model1.Context.tt">
+    <Content Include="ShelfItBase.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>Model1.edmx</DependentUpon>
-      <LastGenOutput>Model1.Context.cs</LastGenOutput>
+      <DependentUpon>ShelfItBase.edmx</DependentUpon>
+      <LastGenOutput>ShelfItBase.Context.cs</LastGenOutput>
     </Content>
-    <Content Include="Model1.tt">
+    <Content Include="ShelfItBase.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>Model1.edmx</DependentUpon>
-      <LastGenOutput>Model1.cs</LastGenOutput>
+      <DependentUpon>ShelfItBase.edmx</DependentUpon>
+      <LastGenOutput>ShelfItBase.cs</LastGenOutput>
     </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

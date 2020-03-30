@@ -21,6 +21,15 @@
           <Property Name="pozycja_id" Type="int" Nullable="false" />
           <Property Name="autor_id" Type="int" Nullable="false" />
         </EntityType>
+        <EntityType Name="EmailMessages">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="body" Type="varchar" MaxLength="1000" Nullable="false" />
+          <Property Name="subject" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="mailName" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
         <EntityType Name="Film">
           <Key>
             <PropertyRef Name="id" />
@@ -61,6 +70,14 @@
           </Key>
           <Property Name="id" Type="int" Nullable="false" />
           <Property Name="ocena" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="PhrasesToChange">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="mail_id" Type="int" Nullable="false" />
+          <Property Name="phraseToChange" Type="varchar" MaxLength="15" Nullable="false" />
         </EntityType>
         <EntityType Name="Poz_App_Mobilna">
           <Key>
@@ -223,6 +240,18 @@
             </Principal>
             <Dependent Role="Muzyka">
               <PropertyRef Name="pozycja_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PhrasesToChange_EmailMessages">
+          <End Role="EmailMessages" Type="Self.EmailMessages" Multiplicity="1" />
+          <End Role="PhrasesToChange" Type="Self.PhrasesToChange" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EmailMessages">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="PhrasesToChange">
+              <PropertyRef Name="mail_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -445,11 +474,13 @@
         <EntityContainer Name="ShelfItModelStoreContainer">
           <EntitySet Name="Autor" EntityType="Self.Autor" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Autor_Pozycja" EntityType="Self.Autor_Pozycja" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="EmailMessages" EntityType="Self.EmailMessages" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Film" EntityType="Self.Film" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Ksiazka" EntityType="Self.Ksiazka" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Muzyka" EntityType="Self.Muzyka" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Notatka" EntityType="Self.Notatka" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Ocena" EntityType="Self.Ocena" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PhrasesToChange" EntityType="Self.PhrasesToChange" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Poz_App_Mobilna" EntityType="Self.Poz_App_Mobilna" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Pozycja" EntityType="Self.Pozycja" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Prosby_Wypozyczen" EntityType="Self.Prosby_Wypozyczen" Schema="dbo" store:Type="Tables" />
@@ -480,6 +511,10 @@
           <AssociationSet Name="FK_Muzyka_Pozycja" Association="Self.FK_Muzyka_Pozycja">
             <End Role="Pozycja" EntitySet="Pozycja" />
             <End Role="Muzyka" EntitySet="Muzyka" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PhrasesToChange_EmailMessages" Association="Self.FK_PhrasesToChange_EmailMessages">
+            <End Role="EmailMessages" EntitySet="EmailMessages" />
+            <End Role="PhrasesToChange" EntitySet="PhrasesToChange" />
           </AssociationSet>
           <AssociationSet Name="FK_Poz_App_Mobilna_Typ" Association="Self.FK_Poz_App_Mobilna_Typ">
             <End Role="Typ" EntitySet="Typ" />
@@ -578,6 +613,16 @@
           <NavigationProperty Name="Autor" Relationship="Self.FK_Autor_Pozycja_Autor" FromRole="Autor_Pozycja" ToRole="Autor" />
           <NavigationProperty Name="Pozycja" Relationship="Self.FK_Autor_Pozycja_Pozycja" FromRole="Autor_Pozycja" ToRole="Pozycja" />
         </EntityType>
+        <EntityType Name="EmailMessages">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="body" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="subject" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="mailName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="PhrasesToChange" Relationship="Self.FK_PhrasesToChange_EmailMessages" FromRole="EmailMessages" ToRole="PhrasesToChange" />
+        </EntityType>
         <EntityType Name="Film">
           <Key>
             <PropertyRef Name="id" />
@@ -623,6 +668,15 @@
           <Property Name="id" Type="Int32" Nullable="false" />
           <Property Name="ocena1" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Pozycja" Relationship="Self.FK_Pozycja_Ocena" FromRole="Ocena" ToRole="Pozycja" />
+        </EntityType>
+        <EntityType Name="PhrasesToChange">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="mail_id" Type="Int32" Nullable="false" />
+          <Property Name="phraseToChange" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="EmailMessages" Relationship="Self.FK_PhrasesToChange_EmailMessages" FromRole="PhrasesToChange" ToRole="EmailMessages" />
         </EntityType>
         <EntityType Name="Poz_App_Mobilna">
           <Key>
@@ -787,6 +841,18 @@
             </Principal>
             <Dependent Role="Autor_Pozycja">
               <PropertyRef Name="pozycja_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PhrasesToChange_EmailMessages">
+          <End Role="EmailMessages" Type="Self.EmailMessages" Multiplicity="1" />
+          <End Role="PhrasesToChange" Type="Self.PhrasesToChange" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EmailMessages">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="PhrasesToChange">
+              <PropertyRef Name="mail_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1042,14 +1108,16 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="ShelfItEntities" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="ShelfItBase" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Autor" EntityType="Self.Autor" />
           <EntitySet Name="Autor_Pozycja" EntityType="Self.Autor_Pozycja" />
+          <EntitySet Name="EmailMessages" EntityType="Self.EmailMessages" />
           <EntitySet Name="Film" EntityType="Self.Film" />
           <EntitySet Name="Ksiazka" EntityType="Self.Ksiazka" />
           <EntitySet Name="Muzyka" EntityType="Self.Muzyka" />
           <EntitySet Name="Notatka" EntityType="Self.Notatka" />
           <EntitySet Name="Ocena" EntityType="Self.Ocena" />
+          <EntitySet Name="PhrasesToChange" EntityType="Self.PhrasesToChange" />
           <EntitySet Name="Poz_App_Mobilna" EntityType="Self.Poz_App_Mobilna" />
           <EntitySet Name="Pozycja" EntityType="Self.Pozycja" />
           <EntitySet Name="Prosby_Wypozyczen" EntityType="Self.Prosby_Wypozyczen" />
@@ -1068,6 +1136,10 @@
           <AssociationSet Name="FK_Autor_Pozycja_Pozycja" Association="Self.FK_Autor_Pozycja_Pozycja">
             <End Role="Pozycja" EntitySet="Pozycja" />
             <End Role="Autor_Pozycja" EntitySet="Autor_Pozycja" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PhrasesToChange_EmailMessages" Association="Self.FK_PhrasesToChange_EmailMessages">
+            <End Role="EmailMessages" EntitySet="EmailMessages" />
+            <End Role="PhrasesToChange" EntitySet="PhrasesToChange" />
           </AssociationSet>
           <AssociationSet Name="FK_Film_Pozycja" Association="Self.FK_Film_Pozycja">
             <End Role="Pozycja" EntitySet="Pozycja" />
@@ -1159,7 +1231,7 @@
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="ShelfItModelStoreContainer" CdmEntityContainer="ShelfItEntities">
+        <EntityContainerMapping StorageEntityContainer="ShelfItModelStoreContainer" CdmEntityContainer="ShelfItBase">
           <EntitySetMapping Name="Autor">
             <EntityTypeMapping TypeName="ShelfItModel.Autor">
               <MappingFragment StoreEntitySet="Autor">
@@ -1175,6 +1247,16 @@
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="pozycja_id" ColumnName="pozycja_id" />
                 <ScalarProperty Name="autor_id" ColumnName="autor_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="EmailMessages">
+            <EntityTypeMapping TypeName="ShelfItModel.EmailMessages">
+              <MappingFragment StoreEntitySet="EmailMessages">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="body" ColumnName="body" />
+                <ScalarProperty Name="subject" ColumnName="subject" />
+                <ScalarProperty Name="mailName" ColumnName="mailName" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1221,6 +1303,15 @@
               <MappingFragment StoreEntitySet="Ocena">
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="ocena1" ColumnName="ocena" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PhrasesToChange">
+            <EntityTypeMapping TypeName="ShelfItModel.PhrasesToChange">
+              <MappingFragment StoreEntitySet="PhrasesToChange">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="mail_id" ColumnName="mail_id" />
+                <ScalarProperty Name="phraseToChange" ColumnName="phraseToChange" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
