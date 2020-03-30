@@ -10,7 +10,7 @@ using DataAccess;
 namespace ShelfItService.Controllers
 {
     [Route("ShelfIt/Music")]
-    public class MusicController : Controller
+    public class MusicController : DefaultController
     {
         MusicDao musicDao;
         UserDao userDao;
@@ -24,9 +24,9 @@ namespace ShelfItService.Controllers
         [HttpGet()]
         public IActionResult GetAllUserMusic(string sessionID, int? userID)
         {
-            if (sessionID == null || userID == null) return BadRequest("Values cannot be null!");
+            if (sessionID == null || userID == null) return NullValues();
             var user = userDao.GetUserByUserID(userID, sessionID);
-            if (user == null) return BadRequest("SessionID is not valid for user!");
+            if (user == null) return InvalidSessionID();
             var listToReturn = musicDao.GetAllMusicForUser(user);
             return Ok(listToReturn);
         }
@@ -34,9 +34,9 @@ namespace ShelfItService.Controllers
         [HttpGet("Music")]
         public IActionResult GetMusic(int? id, int? userID, string sessionID)
         {
-            if (id == null || userID == null || sessionID == null) return BadRequest("Values cannot be null");
+            if (id == null || userID == null || sessionID == null) return NullValues();
             var user = userDao.GetUserByUserID(userID, sessionID);
-            if (user == null) return BadRequest("SessionID is not valid for user!");
+            if (user == null) return InvalidSessionID();
             var musicToReturn = musicDao.GetMusic(user, id);
             if (musicToReturn == null) return BadRequest("Music not found or you cannot see this record.");
             return Ok(musicToReturn);
@@ -45,9 +45,9 @@ namespace ShelfItService.Controllers
         [HttpPost("PostMusic")]
         public IActionResult AddMusicToRepository(string sessionID, int? userID, [FromBody] MuzykaDto muzyka)
         {
-            if (sessionID == null || userID == null) return BadRequest("Values cannot be null.");
+            if (sessionID == null || userID == null) return NullValues();
             var user = userDao.GetUserByUserID(userID, sessionID);
-            if (user == null) return BadRequest("SessionID is not valid for user.");
+            if (user == null) return InvalidSessionID();
             var musicToReturn = musicDao.AddMusicToDatabase(muzyka, user);
             return Ok(musicToReturn);
 

@@ -35,7 +35,7 @@ namespace DataAccess
         public UserDto LoginUser(string login, string password)
         {
             var user = database.Uzytkownik.Single(u => u.email == login && u.password == password);
-            if (user == null) return null;
+            if (user == null || user.passwordReset == true) return null;
             user.sessionID = GenerateSessionID(user.login);
             database.SaveChanges();
             return ConvertUserToDto(user);
@@ -147,7 +147,7 @@ namespace DataAccess
             message = "Ops! Something went wrong.\n" + result;
             return false;
         }
-        /*public bool RemoveChangedPass(string id, out string message)
+        public bool RemoveChangedPass(string id, out string message)
         {
             var record = database.Uzytkownik_Potwierdzenie.Single(x => x.generatedLinkHash == id);
             if(record == null)
@@ -156,8 +156,18 @@ namespace DataAccess
                 return false;
             }
             var user = record.Uzytkownik;
-
-        }*/
+            user.passwordReset = true;
+            var emailAddress = new MailAddress(user.email, user.login);
+            var result = provider.SendResetPassEmail(emailAddress);
+            if (result == "Success!")
+            {
+                database.SaveChanges();
+                message = "Zresetowałeś swoje hasło. Sprawdź skrzynkę mailową z dalszymi instrukcjami.";
+                return true;
+            }
+            message = "Ops! Something went wrong.\n" + result;
+            return false;
+        }
         /// <summary>
         /// ONLY FOR TEST!!!
         /// </summary>

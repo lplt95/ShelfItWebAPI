@@ -10,7 +10,7 @@ using DataTransfer;
 namespace ShelfItService.Controllers
 {
     [Route("ShelfIt/Login")]
-    public class LoginController : Controller
+    public class LoginController : DefaultController
     {
         UserDao userDao;
         public LoginController()
@@ -20,7 +20,7 @@ namespace ShelfItService.Controllers
         [HttpGet("In")]
         public IActionResult LoginUser(string userName, string userPassword)
         {
-            if (userName == null || userPassword == null) return BadRequest("Values cannot be null!");
+            if (userName == null || userPassword == null) return NullValues();
             var user = userDao.LoginUser(userName, userPassword);
             if (user == null) return BadRequest("Wrong login or password!");
             return Ok(user.userID + ", " + user.sessionID);
@@ -28,7 +28,7 @@ namespace ShelfItService.Controllers
         [HttpGet("Out")]
         public IActionResult LogoutUser(int? userID, string sessionID)
         {
-            if (userID == null || sessionID == null) return BadRequest("Values cannot be null!");
+            if (userID == null || sessionID == null) return NullValues();
             var isSuccess = userDao.LogoutUser(userID, sessionID);
             if (!isSuccess) return BadRequest("Failed to logout user! Data was wrong!");
             return Ok();

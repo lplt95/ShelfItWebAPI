@@ -10,6 +10,7 @@ namespace DataAccess
 {
     public class EmailProvider
     {
+        private EmailMessagesDao emailDao;
         private const string email = "shelfitapp";
         private const string password = "RiFDP2TBnFpzxHw";
         private MailAddress serviceAddress = new MailAddress("shelfitapp@gmail.com", "ShelfIt Application");
@@ -25,24 +26,30 @@ namespace DataAccess
                 Host = "smtp.gmail.com",
                 Port = 587
             };
+            emailDao = new EmailMessagesDao();
         }
         public string SendRegisterEmail(MailAddress userAddress, string sessionID)
         {
             string createdLink = ApiElementsEnum.confirmLink + sessionID;
-            EmailMessagesDto messageContent = EmailMessagesRepository.register;
+            EmailMessagesDto messageContent = emailDao.GetEmailByEmailName("register");
             return SendMessage(userAddress, messageContent, createdLink);
         }
         public string SendChangePasswordEmail(MailAddress userAddress, string sessionID)
         {
             string createdLink = ApiElementsEnum.changePassLink + sessionID;
-            EmailMessagesDto messageContent = EmailMessagesRepository.changePass;
+            EmailMessagesDto messageContent = emailDao.GetEmailByEmailName("changePass");
             return SendMessage(userAddress, messageContent, createdLink);
         }
         public string SendInviteEmail(MailAddress userAddress, string sessionID)
         {
             string createdLink = ApiElementsEnum.inviteNewUserLink + sessionID;
-            EmailMessagesDto messageContent = EmailMessagesRepository.inviteUser;
+            EmailMessagesDto messageContent = emailDao.GetEmailByEmailName("invite");
             return SendMessage(userAddress, messageContent, createdLink);
+        }
+        public string SendResetPassEmail(MailAddress userAddress)
+        {
+            EmailMessagesDto messageContent = emailDao.GetEmailByEmailName("resetPass");
+            return SendMessage(userAddress, messageContent, null);
         }
         private string SendMessage(MailAddress userAddress, EmailMessagesDto messageContent, string createdLink)
         {

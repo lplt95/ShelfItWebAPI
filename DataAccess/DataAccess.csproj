@@ -82,6 +82,7 @@
       <DependentUpon>ShelfItBase.tt</DependentUpon>
     </Compile>
     <Compile Include="BookDao.cs" />
+    <Compile Include="EmailMessagesDao.cs" />
     <Compile Include="EmailMessages.cs">
       <DependentUpon>ShelfItBase.tt</DependentUpon>
     </Compile>

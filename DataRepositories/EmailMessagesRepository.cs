@@ -28,5 +28,11 @@ namespace DataRepositories
             body = "",
             phrasesToChange = new List<string>()
         };
+        public static EmailMessagesDto resetPass = new EmailMessagesDto()
+        {
+            subject = "",
+            body = "",
+            phrasesToChange = new List<string>()
+        };
     }
 }
