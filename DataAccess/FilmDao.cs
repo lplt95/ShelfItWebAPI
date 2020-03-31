@@ -63,6 +63,17 @@ namespace DataAccess
             autorDao.ManageAutorsToPosition(film.autorzy, position.id);
             return GetAllFilmsForUser(user);
         }
+        public List<FilmDto> DeleteFilmFromDatabase(UserDto user, int? idFilm)
+        {
+            Film film = database.Film.Single(x => x.id == idFilm);
+            if(film != null)
+            {
+                database.Film.Remove(film);
+                database.SaveChanges();
+
+            }
+            return GetAllFilmsForUser(user);
+        }
         #region PrivateHelpers
         private List<FilmDto> ConvertToDto(List<Film> filmList)
         {

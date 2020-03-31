@@ -8,7 +8,7 @@ using DataTransfer;
 
 namespace DataAccess
 {
-   public class MusicDao
+    public class MusicDao
     {
         ShelfItBase database;
         WydawcaDao wydawcaDao;
@@ -27,7 +27,7 @@ namespace DataAccess
         {
             List<Muzyka> muzykaList = new List<Muzyka>();
             var repoList = user.repozytoria;
-            foreach(var repo in repoList)
+            foreach (var repo in repoList)
             {
                 muzykaList = database.Muzyka.Where(k => k.Pozycja.repozytorium_id == repo.repozytoriumID).ToList();
 
@@ -69,6 +69,17 @@ namespace DataAccess
             };
             database.Muzyka.Add(music);
             autorDao.ManageAutorsToPosition(muzyka.autorzy, position.id);
+            return GetAllMusicForUser(user);
+        }
+
+        public List<MuzykaDto> DeleteMusicFromDatabase(UserDto user, int? idMuzyka)
+        {
+            Muzyka music = database.Muzyka.Single(x => x.id == idMuzyka);
+            if(music != null)
+            {
+                database.Muzyka.Remove(music);
+                database.SaveChanges();
+            }
             return GetAllMusicForUser(user);
         }
 

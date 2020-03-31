@@ -24,15 +24,15 @@ namespace DataRepositories
         };
         public static EmailMessagesDto inviteUser = new EmailMessagesDto()
         {
-            subject = "",
-            body = "",
-            phrasesToChange = new List<string>()
+            subject = "Zaproszenie do aplikacji Shelf It",
+            body = "Cześć! Zostałeś zaproszony do użycia aplikacji Shelf It. Aby z niej skorzystać kliknij w <<<link>>>",
+            phrasesToChange = new List<string>() {"<<<link>>>" }
         };
         public static EmailMessagesDto resetPass = new EmailMessagesDto()
         {
-            subject = "",
-            body = "",
-            phrasesToChange = new List<string>()
+            subject = "Zresetuj swoje hasło!",
+            body = "Jeżeli nie pamiętasz swojego hasła, możesz je zresetować za pomocą tego linku: <<<link>>>. Nie martw się i ciesz się korzystaniem z Shelf It dalej!",
+            phrasesToChange = new List<string>() { "<<<link>>>"}
         };
     }
 }
